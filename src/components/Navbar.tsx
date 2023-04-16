@@ -1,7 +1,11 @@
 import React, { Fragment, Component } from "react";
 
 const Navbar = () => {
-  return <h1>hello from navbar</h1>;
+  return (
+    <>
+      <nav className="relative container mx-auto bg-gray-200">navbar</nav>
+    </>
+  );
 };
 
 export default Navbar;
