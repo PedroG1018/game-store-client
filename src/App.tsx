@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import Home from "./pages/Home";
 import {
   BrowserRouter,
@@ -12,7 +12,7 @@ import Navbar from "./components/Navbar";
 import Platform from "./pages/Platform";
 import Footer from "./components/Footer";
 
-const Layout = () => {
+const Layout: FunctionComponent = () => {
   return (
     <>
       <Navbar />
@@ -28,8 +28,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          {["nintendo", "playstation", "xbox", "sega"].map((path) => (
-            <Route path={path} element={<Platform />} />
+          {["nintendo", "playstation", "xbox", "sega"].map((platform) => (
+            <Route path={platform} element={<Platform children={platform} />} />
           ))}
         </Route>
       </Routes>

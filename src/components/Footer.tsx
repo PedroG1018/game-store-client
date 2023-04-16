@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="bg-blue-500">
+    <footer className="bg-blue-500">
       <img
         src="https://store-ymgqt.mybigcommerce.com/content/images/footer-logo.jpg"
         alt="logo"
@@ -29,7 +29,7 @@ const Footer = () => {
           </ul>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
