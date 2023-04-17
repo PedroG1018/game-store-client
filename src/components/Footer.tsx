@@ -1,18 +1,19 @@
 import React from "react";
+import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
     <footer className="text-white">
-      <div className="bg-blue-700 text-center py-4 m-auto space-x-2">
+      <div className="bg-blue-700 text-center py-4 m-auto space-x-2 items-center">
         <h1 className="pb-3 text-2xl font-semibold">Contact</h1>
         <input
           type="email"
           placeholder="Enter your email"
           className="p-2 rounded-lg"
         />
-        <button type="submit">
-          <img src="" alt="send email icon" />
+        <button type="submit" className="bg-gray-500 p-3 items-center my-auto">
+          <FaSearch />
         </button>
       </div>
       <hr />
