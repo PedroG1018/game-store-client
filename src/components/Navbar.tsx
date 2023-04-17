@@ -33,8 +33,8 @@ const Navbar = () => {
           </a>
         </div>
       </nav>
-      <nav className="grid grid-cols-2 bg-blue-700">
-        <div className="space-x-3 text-white flex items-center m-auto">
+      <nav className="flex bg-blue-700">
+        <div className=" text-white flex my-auto ml-10 justify-start">
           <div className="p-4 hover:cursor-pointer hover:border-b-4">
             <a href="/">Nintendo</a>
           </div>
@@ -48,7 +48,7 @@ const Navbar = () => {
             <a href="/">Xbox</a>
           </div>
         </div>
-        <div className="m-auto space-x-2">
+        <div className="my-auto ml-auto mr-10 space-x-2 justify-end">
           <input
             type="text"
             placeholder="Search the store"
