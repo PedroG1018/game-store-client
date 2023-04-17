@@ -11,6 +11,7 @@ import {
 import Navbar from "./components/Navbar";
 import Platform from "./pages/Platform";
 import Footer from "./components/Footer";
+import Account from "./pages/Account";
 
 const Layout: FunctionComponent = () => {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path={platform} element={<Platform children={platform} />} />
           ))}
         </Route>
+        <Route path="/account" element={<Account />} />
       </Routes>
     </BrowserRouter>
   );

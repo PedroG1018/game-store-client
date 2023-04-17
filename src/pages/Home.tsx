@@ -1,6 +1,7 @@
 const Home = () => {
   const data = [
     {
+      id: 1,
       img: "https://upload.wikimedia.org/wikipedia/commons/0/02/N64-Console-Set.png",
       name: "Nintendo 64 (Black)",
       price: 169.99,
@@ -8,6 +9,7 @@ const Home = () => {
       reviews: 376,
     },
     {
+      id: 2,
       img: "https://upload.wikimedia.org/wikipedia/commons/0/02/N64-Console-Set.png",
       name: "Nintendo 64 (Black)",
       price: 169.99,
@@ -15,6 +17,7 @@ const Home = () => {
       reviews: 376,
     },
     {
+      id: 3,
       img: "https://upload.wikimedia.org/wikipedia/commons/0/02/N64-Console-Set.png",
       name: "Nintendo 64 (Black)",
       price: 169.99,
@@ -22,6 +25,7 @@ const Home = () => {
       reviews: 376,
     },
     {
+      id: 4,
       img: "https://upload.wikimedia.org/wikipedia/commons/0/02/N64-Console-Set.png",
       name: "Nintendo 64 (Black)",
       price: 169.99,
@@ -57,7 +61,7 @@ const Home = () => {
         <h1 className="font-semibold text-3xl">Featured Products</h1>
         <div className="grid grid-cols-1 md:grid-cols-4 items-center pt-4 gap-2">
           {data.map((product) => (
-            <div className="p-10 border-4 border-black">
+            <div className="p-10 border-4 border-black" key={product.id}>
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/0/02/N64-Console-Set.png"
                 alt="product"

@@ -1,7 +1,12 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import React, { Fragment, Component } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+
+  console.log(isAuthenticated);
+
   return (
     <div className="grid grid-rows-2 m-auto">
       <nav className="grid grid-cols-3 bg-blue-500 p-4 text-white">
@@ -22,10 +27,24 @@ const Navbar = () => {
           </a>
         </div>
         <div className="space-x-2 m-auto">
-          <a href="/" className="hover:underline">
-            Login
-          </a>
-          <a href="/" className="hover:underline">
+          {!isAuthenticated ? (
+            <button
+              className="hover:underline"
+              onClick={() => loginWithRedirect()}
+            >
+              Login
+            </button>
+          ) : (
+            <button
+              className="hover:underline"
+              onClick={() =>
+                logout({ logoutParams: { returnTo: window.location.origin } })
+              }
+            >
+              Logout
+            </button>
+          )}
+          <a href="/account" className="hover:underline">
             Account
           </a>
           <a href="/" className="hover:underline">
