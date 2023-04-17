@@ -12,13 +12,20 @@ import Navbar from "./components/Navbar";
 import Platform from "./pages/Platform";
 import Footer from "./components/Footer";
 import Account from "./pages/Account";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Layout: FunctionComponent = () => {
+  const { isLoading, error } = useAuth0();
   return (
     <>
-      <Navbar />
-      <Outlet />
-      <Footer />
+      {error && <p>Authentication Error</p>}
+      {!error && !isLoading && (
+        <>
+          <Navbar />
+          <Outlet />
+          <Footer />
+        </>
+      )}
     </>
   );
 };
