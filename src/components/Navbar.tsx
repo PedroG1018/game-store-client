@@ -27,23 +27,9 @@ const Navbar = () => {
           </a>
         </div>
         <div className="space-x-2 m-auto">
-          {!isAuthenticated ? (
-            <button
-              className="hover:underline"
-              onClick={() => loginWithRedirect()}
-            >
-              Login
-            </button>
-          ) : (
-            <button
-              className="hover:underline"
-              onClick={() =>
-                logout({ logoutParams: { returnTo: window.location.origin } })
-              }
-            >
-              Logout
-            </button>
-          )}
+          <Link to="/login" className="hover:underline">
+            Login
+          </Link>
           <a href="/account" className="hover:underline">
             Account
           </a>

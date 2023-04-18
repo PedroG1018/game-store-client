@@ -13,6 +13,7 @@ import Platform from "./pages/Platform";
 import Footer from "./components/Footer";
 import Account from "./pages/Account";
 import { useAuth0 } from "@auth0/auth0-react";
+import Login from "./pages/Login";
 
 const Layout: FunctionComponent = () => {
   const { isLoading, error } = useAuth0();
@@ -39,8 +40,9 @@ function App() {
           {["nintendo", "playstation", "xbox", "sega"].map((platform) => (
             <Route path={platform} element={<Platform children={platform} />} />
           ))}
+          <Route path="account" element={<Account />} />
+          <Route path="login" element={<Login />} />
         </Route>
-        <Route path="/account" element={<Account />} />
       </Routes>
     </BrowserRouter>
   );
