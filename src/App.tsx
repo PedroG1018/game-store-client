@@ -19,14 +19,9 @@ const Layout: FunctionComponent = () => {
   const { isLoading, error } = useAuth0();
   return (
     <>
-      {error && <p>Authentication Error</p>}
-      {!error && !isLoading && (
-        <>
-          <Navbar />
-          <Outlet />
-          <Footer />
-        </>
-      )}
+      <Navbar />
+      <Outlet />
+      <Footer />
     </>
   );
 };
