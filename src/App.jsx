@@ -1,12 +1,10 @@
-import React, { FunctionComponent, useContext } from "react";
+import React, { useContext } from "react";
 import Home from "./pages/Home";
 import {
   BrowserRouter,
-  Link,
   Outlet,
   Route,
   Routes,
-  useRoutes,
   Navigate,
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -14,8 +12,8 @@ import Platform from "./pages/Platform";
 import Footer from "./components/Footer";
 import Account from "./pages/Account";
 import Login from "./pages/Login";
-import { Props } from "@headlessui/react/dist/types";
 import { AuthContext } from "./context/AuthContext";
+import New from "./pages/New";
 
 const Layout = () => {
   return (
@@ -29,7 +27,7 @@ const Layout = () => {
 
 function App() {
   const { currentUser } = useContext(AuthContext);
-  const RequireAuth = ({ children }: { children: any }) => {
+  const RequireAuth = ({ children }) => {
     return currentUser ? children : <Navigate to="/login" />;
   };
 
@@ -50,6 +48,14 @@ function App() {
             <Route path={platform} element={<Platform children={platform} />} />
           ))}
           <Route path="account" element={<Account />} />
+          <Route
+            path="new"
+            element={
+              <RequireAuth>
+                <New />
+              </RequireAuth>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>
