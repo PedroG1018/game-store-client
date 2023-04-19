@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useContext } from "react";
 import Home from "./pages/Home";
 import {
   BrowserRouter,
@@ -7,16 +7,17 @@ import {
   Route,
   Routes,
   useRoutes,
+  Navigate,
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Platform from "./pages/Platform";
 import Footer from "./components/Footer";
 import Account from "./pages/Account";
-import { useAuth0 } from "@auth0/auth0-react";
 import Login from "./pages/Login";
+import { Props } from "@headlessui/react/dist/types";
+import { AuthContext } from "./context/AuthContext";
 
-const Layout: FunctionComponent = () => {
-  const { isLoading, error } = useAuth0();
+const Layout = () => {
   return (
     <>
       <Navbar />
@@ -27,16 +28,28 @@ const Layout: FunctionComponent = () => {
 };
 
 function App() {
+  const { currentUser } = useContext(AuthContext);
+  const RequireAuth = ({ children }: { children: any }) => {
+    return currentUser ? children : <Navigate to="/login" />;
+  };
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route
+            index
+            element={
+              <RequireAuth>
+                <Home />
+              </RequireAuth>
+            }
+          />
           {["nintendo", "playstation", "xbox", "sega"].map((platform) => (
             <Route path={platform} element={<Platform children={platform} />} />
           ))}
           <Route path="account" element={<Account />} />
-          <Route path="login" element={<Login />} />
         </Route>
       </Routes>
     </BrowserRouter>
