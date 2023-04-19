@@ -1,13 +1,8 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import React, { Fragment, Component } from "react";
 import icon from "../../src/img/1up.png";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
-
-  console.log(isAuthenticated);
-
   return (
     <div className="grid grid-rows-2 m-auto">
       <nav className="grid grid-cols-3 bg-blue-500 p-4 text-white">
