@@ -9,17 +9,9 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <Auth0Provider
-    domain="dev--oipfaza.us.auth0.com"
-    clientId="jYAZwASAQOkTlIW6aguDaX17duvvgEF5"
-    authorizationParams={{
-      redirect_uri: window.location.origin,
-    }}
-  >
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Auth0Provider>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
