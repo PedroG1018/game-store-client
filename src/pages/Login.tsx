@@ -2,7 +2,7 @@ import React from "react";
 
 const Login = () => {
   return (
-    <div className="grid grid-cols-2 justify-items-center my-10 mx-20 gap-10 place-items-center mb-[300px]">
+    <div className="lg:flex justify-items-center justify-center my-10 mx-20 gap-10 place-items-center mb-[300px]">
       <div className="w-full max-w-lg">
         <h2 className="font-semibold text-3xl text-blue-700 pb-4">SIGN IN</h2>
         <form className="shadow-md rounded pt-4 px-6 pb-6">

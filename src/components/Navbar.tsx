@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { Fragment, Component } from "react";
+import icon from "../../src/img/1up.png";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -26,10 +27,7 @@ const Navbar = () => {
         </div>
         <div className="mx-auto">
           <a href="/">
-            <img
-              src="https://store-ymgqt.mybigcommerce.com/content/images/footer-logo.jpg"
-              alt="logo"
-            />
+            <img src={icon} alt="logo" className="w-10" />
           </a>
         </div>
         <div className="space-x-2 m-auto">
