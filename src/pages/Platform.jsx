@@ -1,6 +1,6 @@
 import React, { FunctionComponent, PropsWithChildren } from "react";
 
-const Platform: FunctionComponent<PropsWithChildren> = ({ children }) => {
+const Platform = ({ children }) => {
   return <div>this is the {children} page</div>;
 };
 
