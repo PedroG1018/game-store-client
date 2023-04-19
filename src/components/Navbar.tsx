@@ -11,10 +11,16 @@ const Navbar = () => {
     <div className="grid grid-rows-2 m-auto">
       <nav className="grid grid-cols-3 bg-blue-500 p-4 text-white">
         <div className="space-x-2 m-auto">
-          <a href="/" className="hover:underline">
+          <a
+            href="/"
+            className="decoration-yellow-400 decoration-4 hover:underline hover:underline-offset-8"
+          >
             Contact
           </a>
-          <a href="/" className="hover:underline">
+          <a
+            href="/"
+            className="decoration-yellow-400 decoration-4 hover:underline hover:underline-offset-8"
+          >
             About Us
           </a>
         </div>
@@ -27,9 +33,9 @@ const Navbar = () => {
           </a>
         </div>
         <div className="space-x-2 m-auto">
-          <Link to="/login" className="hover:underline">
+          <a href="/login" className="hover:underline">
             Login
-          </Link>
+          </a>
           <a href="/account" className="hover:underline">
             Account
           </a>
