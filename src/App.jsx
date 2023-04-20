@@ -14,6 +14,7 @@ import Account from "./pages/Account";
 import Login from "./pages/Login";
 import { AuthContext } from "./context/AuthContext";
 import New from "./pages/New";
+import Product from "./pages/Product";
 
 const Layout = () => {
   return (
@@ -56,6 +57,7 @@ function App() {
               </RequireAuth>
             }
           />
+          <Route path=":productId" element={<Product />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <div className="grid grid-rows-2 m-auto">
-      <nav className="grid grid-cols-3 bg-blue-500 p-4 text-white">
+      <nav className="grid grid-cols-3 bg-blue-700 p-4 text-white">
         <div className="space-x-2 m-auto">
           <a
             href="/"
@@ -37,7 +37,7 @@ const Navbar = () => {
           </a>
         </div>
       </nav>
-      <nav className="flex bg-blue-700">
+      <nav className="flex bg-blue-900">
         <div className=" text-white flex my-auto ml-10 justify-start">
           <div className="p-4 hover:cursor-pointer hover:border-b-4">
             <a href="/">Nintendo</a>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="text-white">
-      <div className="bg-blue-700 text-center py-4 m-auto space-x-2 items-center">
+      <div className="bg-blue-900 text-center py-4 m-auto space-x-2 items-center">
         <h1 className="pb-3 text-2xl font-semibold">Contact</h1>
         <input
           type="email"
@@ -17,7 +17,7 @@ const Footer = () => {
         </button>
       </div>
       <hr />
-      <div className="bg-blue-500 py-2">
+      <div className="bg-blue-700 py-2">
         <img
           src="https://store-ymgqt.mybigcommerce.com/content/images/footer-logo.jpg"
           alt="logo"
