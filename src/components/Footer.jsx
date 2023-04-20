@@ -1,35 +1,40 @@
 import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { AiOutlineSend } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
     <footer className="text-white">
-      <div className="bg-blue-900 text-center py-4 m-auto space-x-2 items-center">
+      <div className="bg-blue-900 text-center py-4 m-auto">
         <h1 className="pb-3 text-2xl font-semibold">Contact</h1>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          className="p-2 rounded-lg"
-        />
-        <button type="submit" className="bg-gray-500 p-3 items-center my-auto">
-          <FaSearch />
-        </button>
+        <div className="items-center space-x-2">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="p-2 rounded-lg"
+          />
+          <button type="button" className="bg-gray-500 p-3">
+            <AiOutlineSend />
+          </button>
+        </div>
       </div>
       <hr />
       <div className="bg-blue-700 py-2">
-        <img src="" alt="logo" className="mx-auto" />
-        <div className="grid grid-cols-2 justify-items-center pb-10">
-          <div className="cl-white-200">
-            <p className="font-sans font-bold text-xl">1-UP STORE</p>
+        <div className="grid grid-cols-2 justify-items-center py-10">
+          <div>
+            <h1 className="font-bold text-xl border-b-4 border-yellow-400 mb-2 pb-2">
+              1-UP STORE
+            </h1>
             <ul>
               <li>About Us</li>
               <li>Sell Video Games</li>
               <li>Repair Center</li>
             </ul>
           </div>
-          <div className="">
-            <p className="font-sans font-bold text-xl">ACCOUNT</p>
+          <div>
+            <h1 className="font-bold text-xl border-b-4 border-yellow-400 mb-2 pb-2">
+              ACCOUNT
+            </h1>
             <ul>
               <li>
                 <Link to="/">My Account</Link>

@@ -5,11 +5,11 @@ import Reviews from "../components/ProductPage/Reviews";
 
 const Product = () => {
   return (
-    <div>
+    <>
       <Item />
       <Details />
       <Reviews />
-    </div>
+    </>
   );
 };
 
