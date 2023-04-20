@@ -37,22 +37,22 @@ const Item = () => {
         <div className="mt-10">
           <span className="text-lg flex items-center">
             <strong className="mr-6">Quantity:</strong>
-            <FaRegPlusSquare
+            <FaRegMinusSquare
               className="mr-4 hover:cursor-pointer"
-              onClick={() => handleQuantity("+")}
+              onClick={() => handleQuantity("-")}
             />
             <span className="space-x-1 relative">{quantity}</span>
-            <FaRegMinusSquare
+            <FaRegPlusSquare
               className="ml-4 hover:cursor-pointer"
-              onClick={() => handleQuantity("-")}
+              onClick={() => handleQuantity("+")}
             />
           </span>
         </div>
         <div className="flex justify-center gap-10 mt-8">
-          <button className="bg-yellow-300 py-4 px-6 rounded-lg border font-semibold">
+          <button className="bg-yellow-300 py-4 px-6 rounded-lg border font-semibold hover:bg-red-600 hover:text-white">
             Add to Cart
           </button>
-          <button className="bg-gray-100 py-4 px-6 rounded-lg border font-semibold">
+          <button className="bg-gray-100 py-4 px-6 rounded-lg border font-semibold hover:bg-red-600 hover:text-white">
             Add to Wishlist
           </button>
         </div>

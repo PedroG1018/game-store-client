@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -18,11 +18,7 @@ const Footer = () => {
       </div>
       <hr />
       <div className="bg-blue-700 py-2">
-        <img
-          src="https://store-ymgqt.mybigcommerce.com/content/images/footer-logo.jpg"
-          alt="logo"
-          className="mx-auto"
-        />
+        <img src="" alt="logo" className="mx-auto" />
         <div className="grid grid-cols-2 justify-items-center pb-10">
           <div className="cl-white-200">
             <p className="font-sans font-bold text-xl">1-UP STORE</p>
