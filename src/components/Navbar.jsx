@@ -1,8 +1,33 @@
-import React, { Fragment, Component } from "react";
+import React, { Fragment, Component, useContext } from "react";
 import icon from "../../src/img/1up.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
 
 const Navbar = () => {
+  //const currentUser = auth.currentUser;
+  const { currentUser, dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
+  console.log(auth.currentUser);
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+
+    signOut(auth)
+      .then((userCredential) => {
+        // Sign-out successful
+        dispatch({ type: "LOGOUT" });
+        navigate("/");
+      })
+      .catch((error) => {
+        // an error happend
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode + ": " + errorMessage);
+      });
+  };
+
   return (
     <div className="grid grid-rows-2 m-auto">
       <nav className="grid grid-cols-3 bg-blue-700 p-4 text-white">
@@ -26,9 +51,15 @@ const Navbar = () => {
           </a>
         </div>
         <div className="space-x-2 m-auto">
-          <a href="/login" className="hover:underline">
-            Login
-          </a>
+          {currentUser === null ? (
+            <a href="/login" className="hover:underline">
+              Login
+            </a>
+          ) : (
+            <a href="#" className="hover:underline" onClick={handleLogout}>
+              Logout
+            </a>
+          )}
           <a href="/account" className="hover:underline">
             Account
           </a>
