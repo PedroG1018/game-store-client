@@ -22,7 +22,6 @@ const Login = () => {
         const user = userCredential.user;
         dispatch({ type: "LOGIN", payload: user });
         navigate("/");
-        // ...
       })
       .catch((error) => {
         const errorCode = error.code;
