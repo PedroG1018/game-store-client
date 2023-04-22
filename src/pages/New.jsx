@@ -63,6 +63,15 @@ const New = () => {
     setData({ ...data, [id]: value });
   };
 
+  const handleRadio = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    console.log(value);
+
+    setData({ ...data, [name]: value });
+  };
+
   // changes
   const handleAdd = async (e) => {
     e.preventDefault();
@@ -131,10 +140,11 @@ const New = () => {
               <div className="flex items-center pl-3">
                 <input
                   type="radio"
-                  value=""
-                  name="list-radio-condition"
+                  value="New"
+                  name="condition"
                   id="list-radio-new"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
+                  onChange={handleRadio}
                 />
                 <label
                   htmlFor="list-radio-new"
@@ -148,10 +158,11 @@ const New = () => {
               <div className="flex items-center pl-3">
                 <input
                   type="radio"
-                  value=""
-                  name="list-radio-condition"
+                  value="Refurbished"
+                  name="condition"
                   id="list-radio-refurbished"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
+                  onChange={handleRadio}
                 />
                 <label
                   htmlFor="list-radio-refurbished"
@@ -165,10 +176,11 @@ const New = () => {
               <div className="flex items-center pl-3">
                 <input
                   type="radio"
-                  value=""
-                  name="list-radio-condition"
+                  value="Used"
+                  name="condition"
                   id="list-radio-used"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
+                  onChange={handleRadio}
                 />
                 <label
                   htmlFor="list-radio-used"
@@ -188,10 +200,11 @@ const New = () => {
               <div className="flex items-center pl-3">
                 <input
                   type="radio"
-                  value=""
-                  name="list-radio-type"
+                  value="Console"
+                  name="type"
                   id="list-radio-console"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
+                  onChange={handleRadio}
                 />
                 <label
                   htmlFor="list-radio-console"
@@ -205,10 +218,11 @@ const New = () => {
               <div className="flex items-center pl-3">
                 <input
                   type="radio"
-                  value=""
-                  name="list-radio-type"
+                  value="Game"
+                  name="type"
                   id="list-radio-game"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
+                  onChange={handleRadio}
                 />
                 <label
                   htmlFor="list-radio-game"
