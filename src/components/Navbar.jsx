@@ -6,10 +6,8 @@ import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 
 const Navbar = () => {
-  //const currentUser = auth.currentUser;
   const { currentUser, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
-  console.log(auth.currentUser);
 
   const handleLogout = (e) => {
     e.preventDefault();
