@@ -1,10 +1,4 @@
-import {
-  addDoc,
-  collection,
-  doc,
-  serverTimestamp,
-  setDoc,
-} from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -89,7 +83,6 @@ const New = () => {
     setData({ ...data, [name]: id });
   };
 
-  // changes
   const handleAdd = async (e) => {
     e.preventDefault();
 

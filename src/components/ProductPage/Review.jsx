@@ -1,7 +1,7 @@
 import React from "react";
 
-const Review = () => {
-  return <div className="flex">review</div>;
+const Review = ({ review }) => {
+  return <div className="flex">{review.likes}</div>;
 };
 
 export default Review;
