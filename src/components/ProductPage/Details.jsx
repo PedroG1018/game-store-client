@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Details = () => {
+const Details = ({ details }) => {
   const [toggleDescription, setToggleDescription] = useState(true);
   const [toggleDetails, setToggleDetails] = useState(false);
 
@@ -33,31 +33,24 @@ const Details = () => {
       <hr className="bg-blue-700 h-px border-0" />
       {toggleDescription && (
         <div className="mt-4">
-          <h1 className="text-2xl font-semibold mb-2">Nintendo 64 System</h1>
-          <p>
-            The Nintendo 64 was one of the first gaming consoles to have four
-            controller ports.The most graphically demanding Nintendo 64 games
-            that arrived on larger 32 or 64 MB cartridges are the most advanced
-            and detailed of the 32-bit/64-bit generation. In order to maximize
-            use of the Nintendo 64 hardware developers had to create their own
-            custom microcode. Nintendo 64 games running on custom microcode
-            benefited from much higher polygon counts in tandem with more
-            advanced lighting, animation, physics and AI routines than its
-            32-bit competition.
-          </p>
+          <p>{details.desc}</p>
         </div>
       )}
       {toggleDetails && (
         <div className="mt-4">
           <ul>
             <li className="mb-2">
-              <strong>Region: </strong>NTSC
+              <strong>Region: </strong>
+              {details.region}
             </li>
             <li className="mb-2">
-              <strong>Platform: </strong>N64
+              <strong>Platform: </strong>
+              {details.platform}
             </li>
+            details
             <li>
-              <strong>Product: </strong>System
+              <strong>Product: </strong>
+              {details.type}
             </li>
           </ul>
         </div>

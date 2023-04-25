@@ -1,10 +1,16 @@
 import React from "react";
 import Review from "./Review";
 
-const Reviews = () => {
+const Reviews = ({ reviews }) => {
   return (
     <div>
-      <Review />
+      {reviews.map((review) => {
+        return (
+          <div key={review.id}>
+            <Review review={review.data()} />
+          </div>
+        );
+      })}
     </div>
   );
 };
