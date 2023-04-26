@@ -47,7 +47,6 @@ const Details = ({ details }) => {
               <strong>Platform: </strong>
               {details.platform}
             </li>
-            details
             <li>
               <strong>Product: </strong>
               {details.type}
