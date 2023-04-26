@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import { AuthContext } from "./context/AuthContext";
 import New from "./pages/New";
 import Product from "./pages/Product";
+import Signup from "./pages/Signup";
 
 const Layout = () => {
   return (
@@ -37,6 +38,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
           <Route
             index
             element={

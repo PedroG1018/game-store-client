@@ -1,11 +1,11 @@
-import React, { ChangeEvent, EventHandler, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { Input } from "@material-tailwind/react";
 
 const Login = () => {
-  const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -40,32 +40,18 @@ const Login = () => {
             onSubmit={handleLogin}
           >
             <div className="mb-6">
-              <label
-                htmlFor="email"
-                className="block text-black text-sm font-bold mb-2"
-              >
-                Email
-              </label>
-              <input
+              <Input
                 type="email"
-                placeholder="email"
+                label="Email"
                 id="email"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="mb-8">
-              <label
-                htmlFor="password"
-                className="block text-black text-sm font-bold mb-2"
-              >
-                Password
-              </label>
-              <input
+              <Input
                 type="password"
-                placeholder="password"
+                label="Password"
                 id="password"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
@@ -102,15 +88,12 @@ const Login = () => {
             <button
               type="button"
               className="bg-blue-700 text-white py-3 px-8 hover:bg-red-600 font-bold rounded focus:outline-none focus:shadow-outline"
-              onClick={() => setShowModal(!showModal)}
             >
-              Create Account
+              <a href="/signup">Create Account</a>
             </button>
           </div>
         </div>
       </div>
-
-      {showModal ? <h2>hey</h2> : null}
     </>
   );
 };
