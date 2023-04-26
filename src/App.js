@@ -46,7 +46,11 @@ function App() {
             }
           />
           {["nintendo", "playstation", "xbox", "sega"].map((platform) => (
-            <Route path={platform} element={<Platform children={platform} />} />
+            <Route
+              key={platform}
+              path={platform}
+              element={<Platform children={platform} />}
+            />
           ))}
           <Route
             path="account"

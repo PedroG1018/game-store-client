@@ -15,7 +15,7 @@ const Details = ({ details }) => {
   };
 
   return (
-    <div className="mx-auto lg:w-[50em] w-[40em]">
+    <div className="mx-auto lg:w-full mb-4">
       <div className="flex gap-1">
         <button
           className="bg-gray-100 px-6 py-4 hover:bg-blue-700 hover:text-white active active:bg-blue-700"

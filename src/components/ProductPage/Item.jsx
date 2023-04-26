@@ -22,8 +22,8 @@ const Item = ({ item }) => {
   };
 
   return (
-    <div className="lg:flex mt-10 mb-14 gap-10 justify-center drop-shadow-xl">
-      <div className="w-[500px] inline-block justify-center">
+    <div className="lg:grid lg:grid-cols-2 mt-10 mb-14 gap-10 justify-center drop-shadow-xl">
+      <div className="w-[500px] justify-center">
         <img src={item.image} alt="product" />
       </div>
       <div className="grid justify-center">
@@ -50,7 +50,7 @@ const Item = ({ item }) => {
             />
           </span>
         </div>
-        <div className="flex justify-center gap-10 mt-8">
+        <div className="flex justify-center gap-6 mt-8">
           <button className="bg-yellow-300 py-4 px-6 rounded-lg border font-semibold hover:bg-red-600 hover:text-white">
             Add to Cart
           </button>

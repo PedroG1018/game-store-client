@@ -50,11 +50,11 @@ const Product = () => {
   }
 
   return (
-    <>
+    <div className="max-w-screen-lg mx-auto">
       <Item item={product} />
       <Details details={product} />
       <Reviews reviews={reviews} />
-    </>
+    </div>
   );
 };
 
