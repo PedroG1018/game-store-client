@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegPlusSquare } from "react-icons/fa";
 import { FaRegMinusSquare } from "react-icons/fa";
 
-const Item = () => {
-  const [quantity, setQuantity] = useState(1);
+const Item = ({ item }) => {
+  const [quantity, setQuantity] = useState(null);
+
+  useEffect(() => {
+    const qty = parseInt(item.quantity);
+    setQuantity(qty);
+  }, [item.quantity]);
 
   const handleQuantity = (type) => {
     if (type === "+") {
@@ -17,22 +22,19 @@ const Item = () => {
   };
 
   return (
-    <div className="lg:flex mt-10 mb-14 gap-10 justify-center">
+    <div className="lg:flex mt-10 mb-14 gap-10 justify-center drop-shadow-xl">
       <div className="w-[500px] inline-block justify-center">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/0/02/N64-Console-Set.png"
-          alt="product"
-        />
+        <img src={item.image} alt="product" />
       </div>
       <div className="grid justify-center">
-        <h2 className="text-[2rem] font-semibold text-blue-900 mb-1">
-          Nintendo 64 System
+        <h2 className="text-[2rem] font-semibold text-blue-900 mb-1 capitalize">
+          {item.name}
         </h2>
-        <span className="text-xl text-red-500">${99.99}</span>
+        <span className="text-xl text-red-500">${item.price}</span>
         <br />
-        <span className="text-lg">
+        <span className="text-lg capitalize">
           <strong>Condition: </strong>
-          Refurbished
+          {item.condition}
         </span>
         <div className="mt-10">
           <span className="text-lg flex items-center">

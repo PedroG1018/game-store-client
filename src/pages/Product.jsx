@@ -12,10 +12,12 @@ import {
   collection,
 } from "firebase/firestore";
 import { useParams } from "react-router-dom";
+import { Typography } from "@material-tailwind/react";
 
 const Product = () => {
   const [product, setProduct] = useState({});
   const [reviews, setReviews] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const docId = useParams();
 
   const docRef = doc(db, "products", docId.productId);
@@ -36,14 +38,20 @@ const Product = () => {
       }
 
       setReviews(querySnap.docs);
+      setIsLoading(false);
     };
 
+    setIsLoading(true);
     fetchData();
   }, []);
 
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <>
-      <Item details={product} />
+      <Item item={product} />
       <Details details={product} />
       <Reviews reviews={reviews} />
     </>
