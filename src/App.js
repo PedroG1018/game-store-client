@@ -7,7 +7,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import Nav from "./components/Nav";
 import Platform from "./pages/Platform";
 import Footer from "./components/Footer";
 import Account from "./pages/Account";
@@ -20,7 +20,7 @@ import Signup from "./pages/Signup";
 const Layout = () => {
   return (
     <>
-      <Navbar />
+      <Nav />
       <Outlet />
       <Footer />
     </>
