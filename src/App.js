@@ -39,14 +39,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
-          <Route
-            index
-            element={
-              <RequireAuth>
-                <Home />
-              </RequireAuth>
-            }
-          />
+          <Route index element={<Home />} />
           {["nintendo", "playstation", "xbox", "sega"].map((platform) => (
             <Route
               key={platform}

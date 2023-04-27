@@ -54,9 +54,13 @@ const Footer = () => {
           </li>
         </ul>
       </div>
-      <hr className="my-8 border-blue-gray-50" />
-      <Typography color="white" className="text-center font-normal">
-        &copy; 2023 Material Tailwind
+      <hr className="my-8" />
+      <Typography
+        variant="h5"
+        color="white"
+        className="text-center font-semibold"
+      >
+        &copy; 2023 1-Up Store
       </Typography>
     </footer>
   );

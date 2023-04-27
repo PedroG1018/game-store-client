@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
+import { Typography } from "@material-tailwind/react";
 
 const Navbar = () => {
   const { currentUser, dispatch } = useContext(AuthContext);
@@ -43,10 +44,12 @@ const Navbar = () => {
             About Us
           </a>
         </div>
-        <div className="mx-auto">
+        <div className="mx-auto flex flex-row items-center">
+          <Typography className="mr-2">1-UP</Typography>
           <a href="/">
             <img src={icon} alt="logo" className="w-10" />
           </a>
+          <Typography className="ml-2">STORE</Typography>
         </div>
         <div className="space-x-2 m-auto">
           {currentUser === null ? (
