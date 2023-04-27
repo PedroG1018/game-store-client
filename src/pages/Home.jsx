@@ -35,7 +35,7 @@ const Home = () => {
   ];
 
   return (
-    <main className="p-10">
+    <main className="p-10 max-w-screen-xl mx-auto">
       <div className="flex mx-auto justify-items-center space-x-2 text-center">
         <div>
           <img

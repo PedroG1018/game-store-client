@@ -8,8 +8,6 @@ import React, {
 import icon from "../../src/img/1up.png";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { auth } from "../firebase";
-import { signOut } from "firebase/auth";
 import {
   Typography,
   Navbar,
@@ -22,8 +20,6 @@ import NavList from "./Navbar/NavList";
 
 const Nav = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const { currentUser, dispatch } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     window.addEventListener(
@@ -34,23 +30,6 @@ const Nav = () => {
 
   const toggleIsNavOpen = () => {
     setIsNavOpen((cur) => !cur);
-  };
-
-  const handleLogout = (e) => {
-    e.preventDefault();
-
-    signOut(auth)
-      .then((userCredential) => {
-        // Sign-out successful
-        dispatch({ type: "LOGOUT" });
-        navigate("/");
-      })
-      .catch((error) => {
-        // an error happend
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode + ": " + errorMessage);
-      });
   };
 
   return (

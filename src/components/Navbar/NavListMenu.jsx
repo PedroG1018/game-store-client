@@ -20,12 +20,12 @@ const NavListMenu = () => {
     {
       title: "Nintendo",
       description:
-        "Learn how to use @material-tailwind/html, packed with rich components and widgets.",
+        "Browse through a collection of Nintendo's classic consoles and video games from their 40 year history!",
     },
     {
-      title: "Sony",
+      title: "Playstation",
       description:
-        "Learn how to use @material-tailwind/html, packed with rich components and widgets.",
+        "Browse through the Playstation family of home consoles and portable systems.",
     },
     {
       title: "Microsoft",
