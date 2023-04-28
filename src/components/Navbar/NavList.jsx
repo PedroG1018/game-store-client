@@ -1,4 +1,4 @@
-import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { UserCircleIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 import { MenuItem, Typography } from "@material-tailwind/react";
 import React, { createElement } from "react";
 import NavListMenu from "./NavListMenu";
@@ -6,19 +6,14 @@ import NavListMenu from "./NavListMenu";
 const NavList = () => {
   const navListItems = [
     {
-      label: "Account",
-      href: "/account",
-      icon: UserCircleIcon,
-    },
-    {
       label: "About Us",
       href: "/about",
       icon: UserCircleIcon,
     },
     {
-      label: "Cart",
-      href: "/cart",
-      icon: UserCircleIcon,
+      label: "Contact",
+      href: "/contact",
+      icon: EnvelopeIcon,
     },
   ];
   return (

@@ -75,12 +75,12 @@ const NavListMenu = () => {
           {...triggers}
           className="hidden w-[36rem] grid-cols-7 gap-3 overflow-visible lg:grid"
         >
-          <Card
+          {/* <Card
             color="blue"
             shadow={false}
             variant="gradient"
             className="col-span-3 grid h-full w-full place-items-center rounded-md"
-          ></Card>
+          ></Card> */}
           <ul className="col-span-4 flex w-full flex-col gap-1">
             {renderItems}
           </ul>

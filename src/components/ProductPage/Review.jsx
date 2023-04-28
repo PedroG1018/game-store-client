@@ -57,13 +57,13 @@ const Review = ({ review }) => {
             <div className="5 flex items-center gap-0">
               {Array(parseInt(review.value))
                 .fill(0)
-                .map((star) => (
-                  <StarIcon className="h-5 w-5 text-yellow-700" key={star} />
+                .map((star, index) => (
+                  <StarIcon className="h-5 w-5 text-yellow-700" key={index} />
                 ))}
               {Array(parseInt(5 - review.value))
                 .fill(0)
-                .map((star) => (
-                  <StarIcon className="h-5 w-5 text-gray-700" key={star} />
+                .map((star, index) => (
+                  <StarIcon className="h-5 w-5 text-gray-700" key={index} />
                 ))}
             </div>
           </div>

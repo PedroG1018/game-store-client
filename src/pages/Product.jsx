@@ -53,7 +53,7 @@ const Product = () => {
     <div className="max-w-screen-lg mx-auto">
       <Item item={product} />
       <Details details={product} />
-      <Reviews reviews={reviews} />
+      <Reviews reviews={reviews} product={product} />
     </div>
   );
 };

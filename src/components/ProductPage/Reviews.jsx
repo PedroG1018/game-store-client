@@ -1,21 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Review from "./Review";
-import { collection, getDoc, query } from "firebase/firestore";
-import { db } from "../../firebase";
-import { Typography } from "@mui/material";
+import ReviewForm from "./ReviewForm";
+import { Button, Typography } from "@material-tailwind/react";
 
-const Reviews = ({ reviews }) => {
+const Reviews = ({ reviews, product }) => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen((cur) => !cur);
+  };
+
   return (
-    <div>
-      <h1 className="text-blue-700 font-bold text-3xl">Reviews</h1>
+    <>
+      <div className="flex flex-row justify-between items-center">
+        <Typography variant="h5" fontWeight="10" className="text-blue-700">
+          Reviews
+        </Typography>
+        <Button className="text-right float-right" onClick={handleOpen}>
+          Write a Review
+        </Button>
+      </div>
       {reviews.map((review) => {
-        return (
-          <div key={review.id}>
-            <Review review={review.data()} />
-          </div>
-        );
+        return <Review key={review.data().id} review={review.data()} />;
       })}
-    </div>
+      <ReviewForm open={open} handleOpen={handleOpen} product={product} />
+    </>
   );
 };
 

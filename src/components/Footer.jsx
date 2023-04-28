@@ -6,8 +6,8 @@ import icon from "../../src/img/1up.png";
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-blue-800 p-8 mt-10">
-      <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 text-center md:justify-between text-white">
+    <footer className=" bg-white p-8 max-w-screen-2xl mx-auto">
+      <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 bg:white text-center md:justify-between">
         <a href="/">
           <img src={icon} alt="logo-ct" className="w-10" />
         </a>
@@ -17,7 +17,7 @@ const Footer = () => {
               as="a"
               href="#"
               color="blue-gray"
-              className="font-normal transition-colors hover:text-white focus:text-white text-gray-200"
+              className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
             >
               About Us
             </Typography>
@@ -27,7 +27,7 @@ const Footer = () => {
               as="a"
               href="#"
               color="blue-gray"
-              className="font-normal transition-colors hover:text-white focus:text-white text-gray-200"
+              className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
             >
               Shopping Cart
             </Typography>
@@ -37,7 +37,7 @@ const Footer = () => {
               as="a"
               href="#"
               color="blue-gray"
-              className="font-normal transition-colors hover:text-white focus:text-white text-gray-200"
+              className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
             >
               Orders
             </Typography>
@@ -47,19 +47,15 @@ const Footer = () => {
               as="a"
               href="#"
               color="blue-gray"
-              className="font-normal transition-colors hover:text-white focus:text-white text-gray-200"
+              className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
             >
               Contact Us
             </Typography>
           </li>
         </ul>
       </div>
-      <hr className="my-8" />
-      <Typography
-        variant="h5"
-        color="white"
-        className="text-center font-semibold"
-      >
+      <hr className="my-8 border-blue-gray-50" />
+      <Typography color="blue-gray" className="text-center font-medium">
         &copy; 2023 1-Up Store
       </Typography>
     </footer>
