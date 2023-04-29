@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useDispatch, useContext } from "react";
 import {
   CardBody,
   Card,
@@ -10,14 +10,19 @@ import {
   Select,
   Option,
 } from "@material-tailwind/react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const Signup = () => {
   const [data, setData] = useState({});
 
+  const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -46,7 +51,19 @@ const Signup = () => {
         zipCode: data.zipCode,
         timeStamp: serverTimestamp(),
       });
-      navigate("/login");
+
+      signInWithEmailAndPassword(auth, data.email, data.password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          dispatch({ type: "LOGIN", payload: user });
+          navigate("/");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode + ": " + errorMessage);
+        });
     } catch (error) {
       console.log(error);
     }
