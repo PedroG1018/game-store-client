@@ -16,6 +16,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
+import { useNavigate } from "react-router-dom";
 
 const ReviewForm = ({ open, handleOpen, product }) => {
   const [value, setValue] = useState(1);
@@ -23,19 +24,23 @@ const ReviewForm = ({ open, handleOpen, product }) => {
   const [title, setTitle] = useState("");
   const { currentUser } = useContext(AuthContext);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(product);
+  const navigate = useNavigate();
 
-    // try {
-    //   const res = await addDoc(collection(db, "products"), {
-    //     date: new Date().toLocaleDateString(),
-    //     productId: 2,
-    //   });
-    //   alert(res.id);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  const handleSubmit = async (e) => {
+    try {
+      await addDoc(collection(db, "reviews"), {
+        date: new Date().toLocaleDateString(),
+        productId: product.id,
+        userId: currentUser.uid,
+        title,
+        review,
+        value,
+      });
+
+      navigate(0);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -61,9 +66,8 @@ const ReviewForm = ({ open, handleOpen, product }) => {
               <Rating
                 name="simple-controlled"
                 value={value}
-                onChange={(event, newValue) => {
+                onChange={(e, newValue) => {
                   setValue(newValue);
-                  console.log(newValue);
                 }}
               />
             </div>
@@ -85,7 +89,7 @@ const ReviewForm = ({ open, handleOpen, product }) => {
               onClick={handleSubmit}
               fullWidth
             >
-              Sign In
+              Post
             </Button>
           </CardFooter>
         </Card>

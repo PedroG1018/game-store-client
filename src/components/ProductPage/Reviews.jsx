@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Review from "./Review";
 import ReviewForm from "./ReviewForm";
 import { Button, Typography } from "@material-tailwind/react";
+import { AuthContext } from "../../context/AuthContext";
 
 const Reviews = ({ reviews, product }) => {
   const [open, setOpen] = useState(false);
+  const { currentUser } = useContext(AuthContext);
 
   const handleOpen = () => {
-    setOpen((cur) => !cur);
+    if (currentUser) {
+      setOpen((cur) => !cur);
+      return;
+    }
+
+    alert("You must be logged in to write a review");
   };
 
   return (

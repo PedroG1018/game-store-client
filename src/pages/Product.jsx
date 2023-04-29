@@ -15,6 +15,7 @@ import { useParams } from "react-router-dom";
 import { Typography } from "@material-tailwind/react";
 
 const Product = () => {
+  const [item, setItem] = useState({});
   const [product, setProduct] = useState({});
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +33,8 @@ const Product = () => {
       const querySnap = await getDocs(q);
 
       if (docSnap.exists()) {
-        setProduct(docSnap.data());
+        setItem(docSnap.data());
+        setProduct(docSnap);
       } else {
         console.log("No such document");
       }
@@ -51,8 +53,8 @@ const Product = () => {
 
   return (
     <div className="max-w-screen-lg mx-auto">
-      <Item item={product} />
-      <Details details={product} />
+      <Item item={item} />
+      <Details details={item} />
       <Reviews reviews={reviews} product={product} />
     </div>
   );

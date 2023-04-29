@@ -67,9 +67,7 @@ const Review = ({ review }) => {
                 ))}
             </div>
           </div>
-          <Typography color="blue-gray">
-            {review.date.toDate().toLocaleDateString()}
-          </Typography>
+          <Typography color="blue-gray">{review.date}</Typography>
         </div>
       </CardHeader>
       <CardBody className="mb-6 p-0 text-black">
