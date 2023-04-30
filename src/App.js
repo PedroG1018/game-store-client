@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Toast, Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
 import {
   BrowserRouter,
@@ -23,6 +24,10 @@ const Layout = () => {
       <Nav />
       <Outlet />
       <Footer />
+      <Toaster
+        position="top-center"
+        toastOptions={{ style: { fontSize: ".9rem" } }}
+      ></Toaster>
     </>
   );
 };

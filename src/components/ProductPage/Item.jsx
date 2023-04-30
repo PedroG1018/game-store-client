@@ -1,14 +1,13 @@
+import { MinusCircleIcon, MinusSmallIcon } from "@heroicons/react/24/outline";
+import { MinusIcon } from "@heroicons/react/24/solid";
+import { PlusIcon } from "@heroicons/react/24/solid";
+import { IconButton } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import { FaRegPlusSquare } from "react-icons/fa";
 import { FaRegMinusSquare } from "react-icons/fa";
 
 const Item = ({ item }) => {
-  const [quantity, setQuantity] = useState(null);
-
-  useEffect(() => {
-    const qty = parseInt(item.quantity);
-    setQuantity(qty);
-  }, [item.quantity]);
+  const [quantity, setQuantity] = useState(1);
 
   const handleQuantity = (type) => {
     if (type === "+") {
@@ -39,22 +38,26 @@ const Item = ({ item }) => {
         <div className="mt-10">
           <span className="text-lg flex items-center">
             <strong className="mr-6">Quantity:</strong>
-            <FaRegMinusSquare
-              className="mr-4 hover:cursor-pointer"
+            <IconButton
+              className="mr-4 cursor-pointer w-10 bg-blue-500 rounded-lg border-black hover:border"
               onClick={() => handleQuantity("-")}
-            />
+            >
+              <span className="text-2xl">-</span>
+            </IconButton>
             <span className="space-x-1 relative">{quantity}</span>
-            <FaRegPlusSquare
-              className="ml-4 hover:cursor-pointer"
+            <IconButton
+              className="ml-4 cursor-pointer w-10 bg-blue-500 rounded-lg border-black hover:border"
               onClick={() => handleQuantity("+")}
-            />
+            >
+              <span className="text-xl">+</span>
+            </IconButton>
           </span>
         </div>
         <div className="flex justify-center gap-6 mt-8">
-          <button className="bg-yellow-300 py-4 px-6 rounded-lg border font-semibold hover:bg-red-600 hover:text-white">
+          <button className="bg-yellow-300 px-6 rounded-lg border font-semibold hover:bg-red-600 hover:text-white">
             Add to Cart
           </button>
-          <button className="bg-gray-100 py-4 px-6 rounded-lg border font-semibold hover:bg-red-600 hover:text-white">
+          <button className="bg-gray-100 px-6 rounded-lg border font-semibold hover:bg-red-600 hover:text-white">
             Add to Wishlist
           </button>
         </div>

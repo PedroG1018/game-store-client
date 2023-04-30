@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { AiOutlineSend } from "react-icons/ai";
-import { Link } from "react-router-dom";
 import { Typography } from "@material-tailwind/react";
 import icon from "../../src/img/1up.png";
 

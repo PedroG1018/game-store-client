@@ -19,6 +19,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { toast } from "react-hot-toast";
 
 const ProfileMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,10 +44,6 @@ const ProfileMenu = () => {
     },
   ];
 
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
   const handleLogout = (e) => {
     e.preventDefault();
 
@@ -59,8 +56,8 @@ const ProfileMenu = () => {
       .then((userCredential) => {
         // Sign-out successful
         dispatch({ type: "LOGOUT" });
-        alert("logged out");
-        navigate("/");
+        toast.success("Logged out");
+        navigate("/login");
       })
       .catch((error) => {
         // an error happend

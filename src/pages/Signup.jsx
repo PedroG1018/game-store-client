@@ -9,6 +9,7 @@ import {
   Button,
   Select,
   Option,
+  IconButton,
 } from "@material-tailwind/react";
 import {
   createUserWithEmailAndPassword,
@@ -18,9 +19,13 @@ import { auth, db } from "../firebase";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import toast from "react-hot-toast";
 
 const Signup = () => {
   const [data, setData] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(false);
 
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -32,14 +37,26 @@ const Signup = () => {
     setData({ ...data, [id]: value });
   };
 
+  const handleClickShowPassword = () => {
+    setShowPassword((cur) => !cur);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (data.password.length < 6) {
+      setError(true);
+      toast.error("Password should be at least 6 characters");
+      return;
+    }
+
     try {
       const res = await createUserWithEmailAndPassword(
         auth,
         data.email,
         data.password
       );
+
       await setDoc(doc(db, "users", res.user.uid), {
         firstName: data.firstName,
         lastName: data.lastName,
@@ -52,20 +69,30 @@ const Signup = () => {
         timeStamp: serverTimestamp(),
       });
 
-      signInWithEmailAndPassword(auth, data.email, data.password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          dispatch({ type: "LOGIN", payload: user });
-          navigate("/");
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode + ": " + errorMessage);
-        });
+      toast.success("Account created successfully");
+
+      try {
+        signInWithEmailAndPassword(auth, data.email, data.password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            dispatch({ type: "LOGIN", payload: user });
+            navigate("/");
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode + ": " + errorMessage);
+          });
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       console.log(error);
+      if (error.code === "auth/email-already-in-use") {
+        toast.error("Email already in use");
+        return;
+      }
     }
   };
 
@@ -87,9 +114,23 @@ const Signup = () => {
           label="Password"
           size="lg"
           onChange={handleChange}
-          type="password"
+          type={showPassword ? "text" : "password"}
           required
           id="password"
+          error={error}
+          icon={
+            showPassword ? (
+              <Visibility
+                onClick={handleClickShowPassword}
+                className="cursor-pointer"
+              />
+            ) : (
+              <VisibilityOff
+                onClick={handleClickShowPassword}
+                className="cursor-pointer"
+              />
+            )
+          }
         />
         <Input
           label="First Name"
@@ -141,8 +182,8 @@ const Signup = () => {
           id="phoneNumber"
         />
         <Input
-          label="Postal Code"
-          type="number"
+          label="Zip/Postal Code"
+          type="text"
           size="lg"
           onChange={handleChange}
           required
