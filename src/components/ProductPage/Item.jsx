@@ -1,10 +1,5 @@
-import { MinusCircleIcon, MinusSmallIcon } from "@heroicons/react/24/outline";
-import { MinusIcon } from "@heroicons/react/24/solid";
-import { PlusIcon } from "@heroicons/react/24/solid";
 import { IconButton } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
-import { FaRegPlusSquare } from "react-icons/fa";
-import { FaRegMinusSquare } from "react-icons/fa";
 
 const Item = ({ item }) => {
   const [quantity, setQuantity] = useState(1);
