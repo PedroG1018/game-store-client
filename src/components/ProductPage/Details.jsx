@@ -18,26 +18,26 @@ const Details = ({ details }) => {
     <div className="mx-auto lg:w-full mb-4">
       <div className="flex gap-1">
         <button
-          className="bg-gray-100 px-6 py-4 hover:bg-blue-700 hover:text-white active active:bg-blue-700"
+          className="bg-gray-100 px-6 py-4 hover:bg-blue-900 hover:text-white active active:bg-blue-700"
           onClick={() => handleToggle("desc")}
         >
           Description
         </button>
         <button
-          className="bg-gray-100 px-6 py-4 hover:bg-blue-700 hover:text-white"
+          className="bg-gray-100 px-6 py-4 hover:bg-blue-900 hover:text-white"
           onClick={() => handleToggle("details")}
         >
           Details
         </button>
       </div>
-      <hr className="bg-blue-700 h-px border-0" />
+      <hr className="bg-blue-900 h-px border-0" />
       {toggleDescription && (
-        <div className="mt-4">
+        <div className="mt-4 px-10">
           <p>{details.desc}</p>
         </div>
       )}
       {toggleDetails && (
-        <div className="mt-4">
+        <div className="mt-4 pl-10">
           <ul>
             <li className="mb-2">
               <strong>Region: </strong>

@@ -52,7 +52,7 @@ const Product = () => {
 
   return (
     <div className="max-w-screen-lg mx-auto">
-      <Item item={item} />
+      <Item item={item} productId={product.id} />
       <Details details={item} />
       <Reviews id="reviews" reviews={reviews} product={product} />
     </div>

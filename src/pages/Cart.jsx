@@ -18,6 +18,10 @@ const Cart = () => {
   const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState([]);
 
+  const { currentUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
   // calculates the subtotal using the product prices and quantities in the user's cart
   const subTotal = useMemo(() => {
     let total = 0;
@@ -28,10 +32,6 @@ const Cart = () => {
 
     return total;
   }, [quantities]);
-
-  const { currentUser } = useContext(AuthContext);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     // fetches the user's cart
