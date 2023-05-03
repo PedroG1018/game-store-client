@@ -1,7 +1,14 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+} from "react";
 import { Button, Typography } from "@material-tailwind/react";
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -10,12 +17,26 @@ import {
 } from "firebase/firestore";
 import { AuthContext } from "../context/AuthContext";
 import { db } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const subTotal = useMemo(() => {
+    let total = 0;
+
+    for (let i = 0; i < products.length; i++) {
+      total += products[i].data().price * quantities[i];
+    }
+
+    return total;
+  }, [quantities]);
+
   const { currentUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const cartQuery = query(
     collection(db, "cart"),
@@ -53,7 +74,8 @@ const Cart = () => {
                   });
               }
 
-              setCartItems(products);
+              setCartItems(items);
+              setProducts(products);
               setQuantities(qty);
             })
             .catch((error) => {
@@ -68,9 +90,17 @@ const Cart = () => {
     fetchCart();
   }, []);
 
-  if (isLoading) {
-    return null;
-  }
+  const handleRemove = async (id) => {
+    const docRef = doc(db, "cartItems", id);
+    await deleteDoc(docRef)
+      .then((response) => {
+        console.log("Item removed from cart:", response);
+        navigate(0);
+      })
+      .catch((error) => {
+        console.log("Unable to remove item from cart:", error);
+      });
+  };
 
   return (
     <div className="flex flex-col mx-auto max-w-screen-lg w-full justify-center my-10">
@@ -79,21 +109,21 @@ const Cart = () => {
       </Typography>
       <div className="md:w-[36em] w-[30em] justify-center mx-auto">
         <hr />
-        {cartItems.map((cartItem, index) => {
+        {products.map((product, index) => {
           return (
-            <div className="flex justify-between my-6" key={cartItem.id}>
+            <div className="flex justify-between my-6" key={product.id}>
               <div className="flex space-x-2">
                 <img
-                  src={cartItem.data().image}
+                  src={product.data().image}
                   alt="shirt"
                   className="w-[140px]"
                 />
                 <div>
-                  <Typography>{cartItem.data().name}</Typography>
+                  <Typography>{product.data().name}</Typography>
                   <Typography className="capitalize">
-                    {cartItem.data().condition}
+                    {product.data().condition}
                   </Typography>
-                  {cartItem.data().quantity === 0 ? (
+                  {product.data().quantity === 0 ? (
                     <Typography>Out of Stock</Typography>
                   ) : (
                     <Typography>In Stock</Typography>
@@ -113,14 +143,14 @@ const Cart = () => {
                     </select>
                     <Typography
                       className="text-red-500 font-medium mt-2 cursor-pointer hover:font-semibold my-auto"
-                      onClick={() => alert("hey")}
+                      onClick={() => handleRemove(cartItems[index].id)}
                     >
                       Remove
                     </Typography>
                   </div>
                 </div>
               </div>
-              <Typography>${cartItem.data().price}</Typography>
+              <Typography>${product.data().price}</Typography>
             </div>
           );
         })}
@@ -128,7 +158,7 @@ const Cart = () => {
       <div className="md:w-[36em] w-[30em] justify-center items-center mx-auto mt-6">
         <div className="flex justify-between mb-6">
           <Typography className="font-semibold">Subtotal</Typography>
-          <Typography className="font-semibold">$99.00</Typography>
+          <Typography className="font-semibold">${subTotal}</Typography>
         </div>
 
         <Button className="w-full py-4 capitalize text-md">Checkout</Button>
