@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  useContext,
-  useEffect,
-  useState,
-  useMemo,
-} from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import { Button, Typography } from "@material-tailwind/react";
 import {
   collection,
@@ -24,6 +18,7 @@ const Cart = () => {
   const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState([]);
 
+  // calculates the subtotal using the product prices and quantities in the user's cart
   const subTotal = useMemo(() => {
     let total = 0;
 
@@ -38,13 +33,14 @@ const Cart = () => {
 
   const navigate = useNavigate();
 
-  const cartQuery = query(
-    collection(db, "cart"),
-    where("userId", "==", currentUser.uid)
-  );
-
   useEffect(() => {
+    // fetches the user's cart
     const fetchCart = async () => {
+      const cartQuery = query(
+        collection(db, "cart"),
+        where("userId", "==", currentUser.uid)
+      );
+
       await getDocs(cartQuery)
         .then(async (response) => {
           const cartId = response.docs[0].id;
@@ -54,12 +50,14 @@ const Cart = () => {
             where("cartId", "==", cartId)
           );
 
+          // fetches the cart items
           await getDocs(cartItemsQuery)
             .then(async (response) => {
               const items = response.docs;
               let products = [];
               let qty = [];
 
+              // fetches the products linked to each cart item
               for (const item of items) {
                 qty.push(item.data().quantity);
 
@@ -90,6 +88,8 @@ const Cart = () => {
     fetchCart();
   }, []);
 
+  // removes an item from the user's cart
+  // delete document from collection
   const handleRemove = async (id) => {
     const docRef = doc(db, "cartItems", id);
     await deleteDoc(docRef)
@@ -119,14 +119,16 @@ const Cart = () => {
                   className="w-[140px]"
                 />
                 <div>
-                  <Typography>{product.data().name}</Typography>
+                  <Typography className="font-medium">
+                    {product.data().name}
+                  </Typography>
                   <Typography className="capitalize">
                     {product.data().condition}
                   </Typography>
                   {product.data().quantity === 0 ? (
-                    <Typography>Out of Stock</Typography>
+                    <Typography color="red">Out of Stock</Typography>
                   ) : (
-                    <Typography>In Stock</Typography>
+                    <Typography color="green">In Stock</Typography>
                   )}
 
                   <div className="flex space-x-2 mt-4">
@@ -150,7 +152,9 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-              <Typography>${product.data().price}</Typography>
+              <Typography className="font-medium">
+                ${product.data().price}
+              </Typography>
             </div>
           );
         })}
