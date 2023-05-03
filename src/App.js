@@ -17,6 +17,7 @@ import { AuthContext } from "./context/AuthContext";
 import New from "./pages/New";
 import Product from "./pages/Product";
 import Signup from "./pages/Signup";
+import Cart from "./pages/Cart";
 
 const Layout = () => {
   return (
@@ -69,6 +70,7 @@ function App() {
             }
           />
           <Route path=":productId" element={<Product />} />
+          <Route path="cart" element={<Cart />} />
         </Route>
       </Routes>
     </BrowserRouter>

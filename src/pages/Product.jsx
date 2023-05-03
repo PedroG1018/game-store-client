@@ -12,7 +12,6 @@ import {
   collection,
 } from "firebase/firestore";
 import { useParams } from "react-router-dom";
-import { Typography } from "@material-tailwind/react";
 
 const Product = () => {
   const [item, setItem] = useState({});
