@@ -12,11 +12,17 @@ import {
 import { AuthContext } from "../context/AuthContext";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const { currentUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   // calculates the subtotal using the product prices and quantities in the user's cart
   const subTotal = useMemo(() => {
@@ -28,10 +34,6 @@ const Cart = () => {
 
     return total;
   }, [quantities]);
-
-  const { currentUser } = useContext(AuthContext);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     // fetches the user's cart
@@ -83,8 +85,11 @@ const Cart = () => {
         .catch((error) => {
           console.log("Unable to fetch cart:", error);
         });
+
+      setOpen(false);
     };
 
+    setOpen(true);
     fetchCart();
   }, []);
 
@@ -104,6 +109,7 @@ const Cart = () => {
 
   return (
     <div className="flex flex-col mx-auto max-w-screen-lg w-full justify-center my-10">
+      <Spinner open={open} />
       <Typography variant="h3" className="text-center mb-8">
         Your Cart
       </Typography>

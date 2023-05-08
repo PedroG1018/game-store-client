@@ -1,60 +1,61 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
+import {
+  Accordion,
+  AccordionHeader,
+  AccordionBody,
+  Typography,
+} from "@material-tailwind/react";
+
+const Icon = ({ id, open }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={`${
+        id === open ? "rotate-180" : ""
+      } h-5 w-5 transition-transform`}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+  );
+};
 
 const Details = ({ details }) => {
-  const [toggleDescription, setToggleDescription] = useState(true);
-  const [toggleDetails, setToggleDetails] = useState(false);
+  const [open, setOpen] = useState(0);
 
-  const handleToggle = (type) => {
-    if (type === "desc") {
-      setToggleDescription(true);
-      setToggleDetails(false);
-    } else if (type === "details") {
-      setToggleDescription(false);
-      setToggleDetails(true);
-    }
+  const handleOpen = (value) => {
+    setOpen(open === value ? 0 : value);
   };
 
   return (
-    <div className="mx-auto lg:w-full mb-4">
-      <div className="flex gap-1">
-        <button
-          className="bg-gray-100 px-6 py-4 hover:bg-blue-700 hover:text-white active active:bg-blue-700"
-          onClick={() => handleToggle("desc")}
-        >
+    <Fragment>
+      <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
+        <AccordionHeader onClick={() => handleOpen(1)}>
           Description
-        </button>
-        <button
-          className="bg-gray-100 px-6 py-4 hover:bg-blue-700 hover:text-white"
-          onClick={() => handleToggle("details")}
-        >
-          Details
-        </button>
-      </div>
-      <hr className="bg-blue-700 h-px border-0" />
-      {toggleDescription && (
-        <div className="mt-4">
-          <p>{details.desc}</p>
-        </div>
-      )}
-      {toggleDetails && (
-        <div className="mt-4">
-          <ul>
-            <li className="mb-2">
-              <strong>Region: </strong>
-              {details.region}
-            </li>
-            <li className="mb-2">
-              <strong>Platform: </strong>
-              {details.platform}
-            </li>
-            <li>
-              <strong>Product: </strong>
-              {details.type}
-            </li>
-          </ul>
-        </div>
-      )}
-    </div>
+        </AccordionHeader>
+        <AccordionBody className="text-md">{details.desc}</AccordionBody>
+      </Accordion>
+      <Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
+        <AccordionHeader onClick={() => handleOpen(2)}>Details</AccordionHeader>
+        <AccordionBody className="text-md">
+          <Typography>
+            <strong>Region: </strong>
+            {details.region}
+          </Typography>
+          <Typography>
+            <strong>Release Date: </strong>
+            {details.releaseDate}
+          </Typography>
+          <Typography>
+            <strong>Platform: </strong>
+            {details.platform}
+          </Typography>
+        </AccordionBody>
+      </Accordion>
+    </Fragment>
   );
 };
 

@@ -6,9 +6,9 @@ import {
   Typography,
   CardBody,
 } from "@material-tailwind/react";
-import { StarIcon } from "@heroicons/react/24/solid";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { Rating } from "@mui/material";
 
 const Review = ({ review }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +36,7 @@ const Review = ({ review }) => {
   }
 
   return (
-    <Card color="transparent" shadow={false} className="w-full mx-auto">
+    <Card color="transparent" shadow={false} className="w-[48em] mt-4">
       <CardHeader
         color="transparent"
         floated={false}
@@ -49,22 +49,13 @@ const Review = ({ review }) => {
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png"
           alt="candice wu"
         />
-        <div className="flex w-full flex-col gap-0.5">
+        <div className="flex flex-col gap-0.5">
           <div className="flex items-center justify-between">
             <Typography variant="h5" color="blue-gray">
               {user.firstName + " " + user.lastName}
             </Typography>
-            <div className="5 flex items-center gap-0">
-              {Array(parseInt(review.value))
-                .fill(0)
-                .map((star, index) => (
-                  <StarIcon className="h-5 w-5 text-yellow-700" key={index} />
-                ))}
-              {Array(parseInt(5 - review.value))
-                .fill(0)
-                .map((star, index) => (
-                  <StarIcon className="h-5 w-5 text-gray-700" key={index} />
-                ))}
+            <div className="flex items-center gap-0 ml-6">
+              <Rating name="rating" value={review.value} disabled />
             </div>
           </div>
           <Typography color="blue-gray">{review.date}</Typography>
