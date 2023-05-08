@@ -1,16 +1,17 @@
 import { Button, Typography } from "@material-tailwind/react";
-import { Rating } from "@mui/material";
+import { Backdrop, CircularProgress, Rating } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { AuthContext } from "../../context/AuthContext";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
+import Spinner from "../Spinner";
 
 const Item = ({ item, productId, reviews }) => {
   const [cartId, setCartId] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
 
@@ -36,20 +37,20 @@ const Item = ({ item, productId, reviews }) => {
 
   // calculates the total star rating for this item
   useEffect(() => {
-    let res = 0;
+    let totalRating = 0;
 
     for (const review of reviews) {
-      res += review.data().value;
+      totalRating += review.data().value;
     }
 
-    setRating(res / reviews.length);
-  }, []);
+    setRating(totalRating / reviews.length);
+  }, [reviews]);
 
   // handles
   const handleQuantity = (type) => {
     if (type === "+") {
       if (quantity === 9) {
-        toast.error("Limit 3 per customer");
+        toast.error(`Limit ${quantity} per customer`);
         return;
       }
       setQuantity(quantity + 1);
@@ -62,7 +63,7 @@ const Item = ({ item, productId, reviews }) => {
   };
 
   const handleAddToCart = async () => {
-    setIsLoading(true);
+    setOpen(true);
 
     await addDoc(collection(db, "cartItems"), {
       cartId,
@@ -76,12 +77,8 @@ const Item = ({ item, productId, reviews }) => {
         console.log("Unable to add item to cart:", error);
       });
 
-    setIsLoading(false);
+    setOpen(false);
   };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="flex my-10 justify-center mx-auto space-x-8">
@@ -104,7 +101,12 @@ const Item = ({ item, productId, reviews }) => {
         </Typography>
         <div className="flex space-x-2 mt-1 pl-0">
           <Rating name="rating" value={rating} disabled />
-          <Typography as="a" href="#reviews" variant="h6">
+          <Typography
+            as="a"
+            href="#reviews"
+            variant="h6"
+            className="text-gray-800 hover:text-black"
+          >
             {reviews.length} Reviews
           </Typography>
         </div>
@@ -133,7 +135,7 @@ const Item = ({ item, productId, reviews }) => {
 
         <Button
           fullWidth
-          className="bg-yellow-300 rounded-lg border font-semibold hover:bg-red-600 hover:text-white text-black mb-2 capitalize text-sm transition-colors"
+          className="bg-yellow-300 rounded-lg border font-semibold hover:bg-red-600 hover:text-white text-black mb-4 capitalize text-sm transition-colors"
           onClick={handleAddToCart}
         >
           Add to Cart
@@ -144,6 +146,7 @@ const Item = ({ item, productId, reviews }) => {
         >
           Add to Wishlist
         </Button>
+        <Spinner open={open} />
       </div>
     </div>
   );

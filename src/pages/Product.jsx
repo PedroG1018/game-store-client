@@ -12,12 +12,14 @@ import {
   collection,
 } from "firebase/firestore";
 import { useParams } from "react-router-dom";
+import { Backdrop, CircularProgress } from "@mui/material";
+import Spinner from "../components/Spinner";
 
 const Product = () => {
   const [item, setItem] = useState({});
   const [product, setProduct] = useState({});
   const [reviews, setReviews] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const docId = useParams();
 
   const docRef = doc(db, "products", docId.productId);
@@ -39,19 +41,16 @@ const Product = () => {
       }
 
       setReviews(querySnap.docs);
-      setIsLoading(false);
+      setOpen(false);
     };
 
-    setIsLoading(true);
+    setOpen(true);
     fetchData();
   }, []);
 
-  if (isLoading) {
-    return null;
-  }
-
   return (
     <div className="max-w-screen-lg mx-auto">
+      <Spinner open={open} />
       <Item item={item} productId={product.id} reviews={reviews} />
       <Details details={item} />
       <Reviews id="reviews" reviews={reviews} product={product} />
