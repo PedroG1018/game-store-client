@@ -1,5 +1,5 @@
 import { Button, Typography } from "@material-tailwind/react";
-import { Backdrop, CircularProgress, Rating } from "@mui/material";
+import { Rating } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { AuthContext } from "../../context/AuthContext";
@@ -7,10 +7,10 @@ import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
 import Spinner from "../Spinner";
 
-const Item = ({ item, productId, reviews }) => {
+const Item = ({ item, productId }) => {
   const [cartId, setCartId] = useState("");
+  const [inCart, setInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [rating, setRating] = useState(1);
   const [open, setOpen] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
@@ -24,8 +24,30 @@ const Item = ({ item, productId, reviews }) => {
       );
 
       await getDocs(cartQuery)
-        .then((response) => {
+        .then(async (response) => {
           setCartId(response.docs[0].id);
+
+          const cartItemsQuery = query(
+            collection(db, "cartItems"),
+            where("cartId", "==", cartId)
+          );
+
+          await getDocs(cartItemsQuery)
+            .then((response) => {
+              const cartItems = response.docs;
+
+              for (const item of cartItems) {
+                console.log(item.data());
+                if (productId === item.data().productId) {
+                  setInCart(true);
+                  return;
+                }
+                setInCart(false);
+              }
+            })
+            .catch((error) => {
+              console.log("Unable to fetch cart items:", error);
+            });
         })
         .catch((error) => {
           console.log("Unable to fetch cart:", error);
@@ -33,21 +55,12 @@ const Item = ({ item, productId, reviews }) => {
     };
 
     fetchCart();
-  }, []);
-
-  // calculates the total star rating for this item
-  useEffect(() => {
-    let totalRating = 0;
-
-    for (const review of reviews) {
-      totalRating += review.data().value;
-    }
-
-    setRating(totalRating / reviews.length);
-  }, [reviews]);
+  }, [cartId]);
 
   // handles
-  const handleQuantity = (type) => {
+  const handleQuantity = (e, type) => {
+    e.preventDefault();
+
     if (type === "+") {
       if (quantity === 9) {
         toast.error(`Limit ${quantity} per customer`);
@@ -63,6 +76,11 @@ const Item = ({ item, productId, reviews }) => {
   };
 
   const handleAddToCart = async () => {
+    if (inCart) {
+      toast.error("Item already in your cart");
+      return;
+    }
+
     setOpen(true);
 
     await addDoc(collection(db, "cartItems"), {
@@ -72,6 +90,8 @@ const Item = ({ item, productId, reviews }) => {
     })
       .then((response) => {
         console.log("Item added to cart!", response);
+        toast.success("Item added to your cart");
+        setInCart(true);
       })
       .catch((error) => {
         console.log("Unable to add item to cart:", error);
@@ -79,6 +99,8 @@ const Item = ({ item, productId, reviews }) => {
 
     setOpen(false);
   };
+
+  console.log(inCart);
 
   return (
     <div className="flex my-10 justify-center mx-auto space-x-8">
@@ -100,14 +122,14 @@ const Item = ({ item, productId, reviews }) => {
           {item.condition}
         </Typography>
         <div className="flex space-x-2 mt-1 pl-0">
-          <Rating name="rating" value={rating} disabled />
+          <Rating name="rating" value={1} disabled />
           <Typography
             as="a"
             href="#reviews"
             variant="h6"
             className="text-gray-800 hover:text-black"
           >
-            {reviews.length} Reviews
+            1.0 Rated
           </Typography>
         </div>
 
@@ -116,7 +138,7 @@ const Item = ({ item, productId, reviews }) => {
 
           <button
             className="mx-4 bg-blue-900 rounded-lg h-8 px-4"
-            onClick={() => handleQuantity("-")}
+            onClick={(e) => handleQuantity("-")}
           >
             <Typography variant="h5" className="text-white">
               -
@@ -125,7 +147,7 @@ const Item = ({ item, productId, reviews }) => {
           <Typography className="space-x-1">{quantity}</Typography>
           <button
             className="ml-4 bg-blue-900 rounded-lg h-8 px-4"
-            onClick={() => handleQuantity("+")}
+            onClick={(e) => handleQuantity("+")}
           >
             <Typography variant="h5" className="text-white">
               +
@@ -135,7 +157,7 @@ const Item = ({ item, productId, reviews }) => {
 
         <Button
           fullWidth
-          className="bg-yellow-300 rounded-lg border font-semibold hover:bg-red-600 hover:text-white text-black mb-4 capitalize text-sm transition-colors"
+          className="bg-yellow-400 rounded-lg border font-semibold hover:bg-red-600 hover:text-white text-black mb-4 capitalize text-sm transition-colors"
           onClick={handleAddToCart}
         >
           Add to Cart

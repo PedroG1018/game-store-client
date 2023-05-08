@@ -36,7 +36,7 @@ const Review = ({ review }) => {
   }
 
   return (
-    <Card color="transparent" shadow={false} className="w-full mx-auto">
+    <Card color="transparent" shadow={false} className="w-[48em] mt-4">
       <CardHeader
         color="transparent"
         floated={false}
@@ -49,12 +49,12 @@ const Review = ({ review }) => {
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png"
           alt="candice wu"
         />
-        <div className="flex w-full flex-col gap-0.5">
+        <div className="flex flex-col gap-0.5">
           <div className="flex items-center justify-between">
             <Typography variant="h5" color="blue-gray">
               {user.firstName + " " + user.lastName}
             </Typography>
-            <div className="5 flex items-center gap-0">
+            <div className="flex items-center gap-0 ml-6">
               <Rating name="rating" value={review.value} disabled />
             </div>
           </div>

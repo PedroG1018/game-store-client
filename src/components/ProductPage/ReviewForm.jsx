@@ -35,6 +35,7 @@ const ReviewForm = ({ open, handleOpen, product }) => {
         title,
         review,
         value,
+        timeStamp: new Date().getTime(),
       });
 
       navigate(0);
