@@ -6,9 +6,9 @@ import {
   Typography,
   CardBody,
 } from "@material-tailwind/react";
-import { StarIcon } from "@heroicons/react/24/solid";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { Rating } from "@mui/material";
 
 const Review = ({ review }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -55,16 +55,7 @@ const Review = ({ review }) => {
               {user.firstName + " " + user.lastName}
             </Typography>
             <div className="5 flex items-center gap-0">
-              {Array(parseInt(review.value))
-                .fill(0)
-                .map((star, index) => (
-                  <StarIcon className="h-5 w-5 text-yellow-700" key={index} />
-                ))}
-              {Array(parseInt(5 - review.value))
-                .fill(0)
-                .map((star, index) => (
-                  <StarIcon className="h-5 w-5 text-gray-700" key={index} />
-                ))}
+              <Rating name="rating" value={review.value} disabled />
             </div>
           </div>
           <Typography color="blue-gray">{review.date}</Typography>

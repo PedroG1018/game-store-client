@@ -1,4 +1,4 @@
-import { Button, IconButton, Typography } from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react";
 import { Rating } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -6,13 +6,15 @@ import { AuthContext } from "../../context/AuthContext";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
 
-const Item = ({ item, productId }) => {
+const Item = ({ item, productId, reviews }) => {
   const [cartId, setCartId] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [rating, setRating] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
 
+  // fetches the user's cart id
   useEffect(() => {
     const fetchCart = async () => {
       const cartQuery = query(
@@ -32,9 +34,21 @@ const Item = ({ item, productId }) => {
     fetchCart();
   }, []);
 
+  // calculates the total star rating for this item
+  useEffect(() => {
+    let res = 0;
+
+    for (const review of reviews) {
+      res += review.data().value;
+    }
+
+    setRating(res / reviews.length);
+  }, []);
+
+  // handles
   const handleQuantity = (type) => {
     if (type === "+") {
-      if (quantity === 3) {
+      if (quantity === 9) {
         toast.error("Limit 3 per customer");
         return;
       }
@@ -71,30 +85,28 @@ const Item = ({ item, productId }) => {
 
   return (
     <div className="flex my-10 justify-center mx-auto space-x-8">
-      <div className="min-w-[35em] rounded-3xl border p-2">
+      <div className="min-w-[30em] rounded-3xl border p-2">
         <img src={item.image} alt="product" />
       </div>
       <div className="flex flex-col min-w-[30em]">
-        <div className="flex justify-between">
-          <Typography
-            variant="h6"
-            className="font-semibold text-blue-900 mb-1 capitalize"
-          >
-            {item.name}
-          </Typography>
-          <Typography variant="h6" className=" text-red-500">
-            ${item.price}
-          </Typography>
-        </div>
+        <Typography
+          variant="h5"
+          className="font-semibold text-blue-900 capitalize"
+        >
+          {item.name}
+        </Typography>
+        <Typography variant="h6" className=" text-red-500">
+          ${item.price}
+        </Typography>
         <Typography variant="h6" className="capitalize">
           <strong>Condition: </strong>
           {item.condition}
         </Typography>
         <div className="flex space-x-2 mt-1 pl-0">
-          <Rating name="rating" value={4} disabled />
-          <a href="#">
-            <Typography variant="h6">150 Reviews</Typography>
-          </a>
+          <Rating name="rating" value={rating} disabled />
+          <Typography as="a" href="#reviews" variant="h6">
+            {reviews.length} Reviews
+          </Typography>
         </div>
 
         <div className="flex my-10 items-center">

@@ -3,6 +3,7 @@ import Review from "./Review";
 import ReviewForm from "./ReviewForm";
 import { Button, Typography } from "@material-tailwind/react";
 import { AuthContext } from "../../context/AuthContext";
+import { toast } from "react-hot-toast";
 
 const Reviews = ({ reviews, product }) => {
   const [open, setOpen] = useState(false);
@@ -14,21 +15,24 @@ const Reviews = ({ reviews, product }) => {
       return;
     }
 
-    alert("You must be logged in to write a review");
+    toast.error("You must be logged in to write a review");
   };
 
   return (
     <>
-      <div className="flex flex-row justify-between items-center">
-        <Typography variant="h5" fontWeight="10" className="text-blue-700">
+      <div
+        id="reviews"
+        className="flex flex-row justify-between items-center mt-14"
+      >
+        <Typography variant="h4" fontWeight="10" className="text-blue-900">
           Reviews
         </Typography>
-        <Button className="text-right float-right" onClick={handleOpen}>
+        <Button className="capitalize bg-blue-900" onClick={handleOpen}>
           Write a Review
         </Button>
       </div>
       {reviews.map((review) => {
-        return <Review key={review.data().id} review={review.data()} />;
+        return <Review key={review.id} review={review.data()} />;
       })}
       <ReviewForm open={open} handleOpen={handleOpen} product={product} />
     </>

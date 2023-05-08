@@ -1,4 +1,3 @@
-import { StarIcon } from "@heroicons/react/24/solid";
 import {
   Dialog,
   Card,
@@ -7,16 +6,15 @@ import {
   CardFooter,
   Typography,
   Button,
-  Checkbox,
   Input,
   Textarea,
 } from "@material-tailwind/react";
-import { Rating } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
+import { Rating } from "@mui/material";
 
 const ReviewForm = ({ open, handleOpen, product }) => {
   const [value, setValue] = useState(1);
@@ -27,6 +25,8 @@ const ReviewForm = ({ open, handleOpen, product }) => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
       await addDoc(collection(db, "reviews"), {
         date: new Date().toLocaleDateString(),
@@ -52,11 +52,7 @@ const ReviewForm = ({ open, handleOpen, product }) => {
         className="bg-transparent shadow-none"
       >
         <Card className="mx-auto w-full max-w-[24rem]">
-          <CardHeader
-            variant="gradient"
-            color="blue"
-            className="mb-4 grid h-20 place-items-center"
-          >
+          <CardHeader className="mb-4 grid h-20 place-items-center bg-blue-900">
             <Typography variant="h3" color="white">
               Write a Review
             </Typography>
@@ -64,7 +60,7 @@ const ReviewForm = ({ open, handleOpen, product }) => {
           <CardBody className="flex flex-col gap-4">
             <div className="justify-center flex">
               <Rating
-                name="simple-controlled"
+                name="rating"
                 value={value}
                 onChange={(e, newValue) => {
                   setValue(newValue);
@@ -84,12 +80,12 @@ const ReviewForm = ({ open, handleOpen, product }) => {
           </CardBody>
           <CardFooter className="pt-0">
             <Button
-              variant="gradient"
               type="submit"
               onClick={handleSubmit}
               fullWidth
+              className="capitalize bg-blue-900"
             >
-              Post
+              Submit
             </Button>
           </CardFooter>
         </Card>
