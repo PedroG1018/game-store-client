@@ -74,16 +74,6 @@ const Reviews = ({ product }) => {
       });
   };
 
-  const fetchReviewCount = async (coll) => {
-    await getDocs(coll)
-      .then((response) => {
-        setNumReviews(Math.ceil(response.docs.length / 5));
-      })
-      .catch((error) => {
-        console.log("Unable to fetch review count:", error);
-      });
-  };
-
   useEffect(() => {
     const reviewsQuery = query(
       collection(db, "reviews"),
@@ -92,11 +82,26 @@ const Reviews = ({ product }) => {
       limit(5)
     );
 
-    const coll = collection(db, "reviews");
+    const coll = query(
+      collection(db, "reviews"),
+      where("productId", "==", product.id || "")
+    );
+
+    const fetchReviewCount = async (coll) => {
+      await getDocs(coll)
+        .then((response) => {
+          console.log("total reviews:", response.docs.length);
+          setNumReviews(Math.ceil(response.docs.length / 5));
+          console.log("numReviews:", numReviews);
+        })
+        .catch((error) => {
+          console.log("Unable to fetch review count:", error);
+        });
+    };
 
     fetchReviews(reviewsQuery);
     fetchReviewCount(coll);
-  }, [product]);
+  }, [product, numReviews]);
 
   const handleOpen = () => {
     if (currentUser) {
@@ -107,12 +112,11 @@ const Reviews = ({ product }) => {
     toast.error("You must be logged in to write a review");
   };
 
+  console.log(reviews);
+
   return (
-    <>
-      <div
-        id="reviews"
-        className="flex flex-row justify-between items-center mt-6"
-      >
+    <div id="reviews">
+      <div className="flex flex-row justify-between items-center mt-6">
         <Typography variant="h4" fontWeight="10" className="text-blue-900">
           Reviews
         </Typography>
@@ -121,6 +125,7 @@ const Reviews = ({ product }) => {
         </Button>
       </div>
       {reviews.map((review) => {
+        console.log("review:");
         return <Review key={review.id} review={review.data()} />;
       })}
 
@@ -149,7 +154,7 @@ const Reviews = ({ product }) => {
         </IconButton>
       </div>
       <ReviewForm open={open} handleOpen={handleOpen} product={product} />
-    </>
+    </div>
   );
 };
 

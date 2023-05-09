@@ -9,31 +9,30 @@ import {
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { Rating } from "@mui/material";
+import Spinner from "../Spinner";
 
 const Review = ({ review }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({ firstName: "", lastName: "" });
 
   useEffect(() => {
     const fetchUser = async () => {
       const docRef = doc(db, "users", review.userId);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        setUser(docSnap.data());
-        setIsLoading(false);
-      } else {
-        console.log("No such user");
-      }
+      await getDoc(docRef)
+        .then((response) => {
+          if (response.exists()) {
+            setUser(response.data());
+            return;
+          }
+          setUser({ firstName: "Deleted", lastName: "User" });
+        })
+        .catch((error) => {
+          console.log("User not found:", error);
+          setUser({ firstName: "Deleted", lastName: "User" });
+        });
     };
 
-    setIsLoading(true);
     fetchUser();
   }, [review]);
-
-  if (isLoading) {
-    return null;
-  }
 
   return (
     <Card color="transparent" shadow={false} className="w-[48em] mt-4">

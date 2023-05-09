@@ -5,7 +5,13 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth, db } from "../firebase";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
@@ -46,6 +52,7 @@ const Signup = () => {
       );
 
       await setDoc(doc(db, "users", res.user.uid), {
+        email: data.email,
         firstName: data.firstName,
         lastName: data.lastName,
         address: data.address,
@@ -55,26 +62,38 @@ const Signup = () => {
         phoneNumber: data.phoneNumber,
         zipCode: data.zipCode,
         timeStamp: serverTimestamp(),
-      });
-
-      toast.success("Account created successfully");
-
-      try {
-        signInWithEmailAndPassword(auth, data.email, data.password)
-          .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            dispatch({ type: "LOGIN", payload: user });
-            navigate("/");
+      })
+        .then(async () => {
+          await addDoc(collection(db, "cart"), {
+            userId: res.user.uid,
           })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode + ": " + errorMessage);
-          });
-      } catch (error) {
-        console.log(error);
-      }
+            .then(() => {
+              toast.success("Account created successfully");
+
+              try {
+                signInWithEmailAndPassword(auth, data.email, data.password)
+                  .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    dispatch({ type: "LOGIN", payload: user });
+                    navigate("/");
+                  })
+                  .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode + ": " + errorMessage);
+                  });
+              } catch (error) {
+                console.log(error);
+              }
+            })
+            .catch((error) => {
+              console.log("Unable to create cart:", error);
+            });
+        })
+        .catch((error) => {
+          console.log("Unable to create account:", error);
+        });
     } catch (error) {
       console.log(error);
       if (error.code === "auth/email-already-in-use") {
@@ -87,7 +106,7 @@ const Signup = () => {
   return (
     <Card className="mx-auto w-full max-w-lg my-6">
       <form className="p-10 flex flex-col gap-4" onSubmit={handleSubmit}>
-        <Typography variant="h3" className="text-center text-blue-700">
+        <Typography variant="h3" className="text-center text-blue-900">
           CREATE ACCOUNT
         </Typography>
         <Input
@@ -164,7 +183,7 @@ const Signup = () => {
           required
           id="zipCode"
         />
-        <Button variant="gradient" fullWidth className="mt-2" type="submit">
+        <Button fullWidth className="mt-2 capitalize bg-blue-900" type="submit">
           Sign Up
         </Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
