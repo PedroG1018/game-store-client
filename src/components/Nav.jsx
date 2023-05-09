@@ -1,13 +1,4 @@
-import React, {
-  Fragment,
-  Component,
-  useContext,
-  useState,
-  useEffect,
-} from "react";
-import icon from "../../src/img/1up.png";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Navbar,
@@ -33,7 +24,7 @@ const Nav = () => {
   };
 
   return (
-    <Navbar className="w-full p-2 lg:rounded-full lg:pl-6 mx-auto">
+    <Navbar className="w-full p-2 lg:pl-6 mx-auto" shadow={false}>
       <div className="relative mx-auto flex items-center text-blue-gray-900">
         <Typography
           as="a"
