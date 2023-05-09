@@ -5,6 +5,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Input } from "@material-tailwind/react";
 import { useState } from "react";
 import SearchInput from "../components/SearchInput";
+import Brands from "../components/Home/Brands";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -61,6 +62,7 @@ const Home = () => {
           </p>
         </div>
       </div>
+      <Brands />
       <div className="pt-6 text-center">
         <h1 className="font-semibold text-3xl">Featured Products</h1>
         <div
