@@ -41,7 +41,7 @@ const Review = ({ review }) => {
         color="transparent"
         floated={false}
         shadow={false}
-        className="mx-0 flex items-center gap-4 pt-0 pb-6"
+        className="mx-0 flex items-center gap-4 pt-0 pb-2"
       >
         <Avatar
           size="lg"
@@ -49,9 +49,9 @@ const Review = ({ review }) => {
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png"
           alt="candice wu"
         />
-        <div className="flex flex-col gap-0.5">
+        <div className="flex flex-col">
           <div className="flex items-center justify-between">
-            <Typography variant="h5" color="blue-gray">
+            <Typography variant="h6" color="blue-gray">
               {user.firstName + " " + user.lastName}
             </Typography>
             <div className="flex items-center gap-0 ml-6">
@@ -61,7 +61,7 @@ const Review = ({ review }) => {
           <Typography color="blue-gray">{review.date}</Typography>
         </div>
       </CardHeader>
-      <CardBody className="mb-6 p-0 text-black">
+      <CardBody className="mb-6 p-2 text-black">
         <Typography variant="h5">{review.title}</Typography>
         <Typography>&quot;{review.review}&quot;</Typography>
       </CardBody>

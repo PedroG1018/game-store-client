@@ -37,7 +37,6 @@ const Item = ({ item, productId }) => {
               const cartItems = response.docs;
 
               for (const item of cartItems) {
-                console.log(item.data());
                 if (productId === item.data().productId) {
                   setInCart(true);
                   return;
@@ -100,11 +99,9 @@ const Item = ({ item, productId }) => {
     setOpen(false);
   };
 
-  console.log(inCart);
-
   return (
     <div className="flex my-10 justify-center mx-auto space-x-8">
-      <div className="min-w-[30em] rounded-3xl border p-2">
+      <div className="max-w-[24em] rounded-3xl border p-2">
         <img src={item.image} alt="product" />
       </div>
       <div className="flex flex-col min-w-[30em]">

@@ -1,13 +1,4 @@
-import React, {
-  Fragment,
-  Component,
-  useContext,
-  useState,
-  useEffect,
-} from "react";
-import icon from "../../src/img/1up.png";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Navbar,

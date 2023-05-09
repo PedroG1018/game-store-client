@@ -1,16 +1,5 @@
-import React, { useState, useDispatch, useContext } from "react";
-import {
-  CardBody,
-  Card,
-  CardFooter,
-  Typography,
-  Input,
-  Checkbox,
-  Button,
-  Select,
-  Option,
-  IconButton,
-} from "@material-tailwind/react";
+import React, { useState, useContext } from "react";
+import { Card, Typography, Input, Button } from "@material-tailwind/react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -19,12 +8,13 @@ import { auth, db } from "../firebase";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { InformationCircleIcon } from "@heroicons/react/24/solid";
+
 import toast from "react-hot-toast";
+import PasswordInput from "../components/PasswordInput";
 
 const Signup = () => {
   const [data, setData] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
 
   const { dispatch } = useContext(AuthContext);
@@ -34,17 +24,15 @@ const Signup = () => {
     const id = e.target.id;
     const value = e.target.value;
 
-    setData({ ...data, [id]: value });
-  };
+    console.log(value);
 
-  const handleClickShowPassword = () => {
-    setShowPassword((cur) => !cur);
+    setData({ ...data, [id]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (data.password.length < 6) {
+    if (data.password.length < 8) {
       setError(true);
       toast.error("Password should be at least 6 characters");
       return;
@@ -97,8 +85,8 @@ const Signup = () => {
   };
 
   return (
-    <Card className="mx-auto w-full max-w-lg my-6" onSubmit={handleSubmit}>
-      <form className="p-10 flex flex-col gap-4">
+    <Card className="mx-auto w-full max-w-lg my-6">
+      <form className="p-10 flex flex-col gap-4" onSubmit={handleSubmit}>
         <Typography variant="h3" className="text-center text-blue-700">
           CREATE ACCOUNT
         </Typography>
@@ -110,28 +98,15 @@ const Signup = () => {
           required
           id="email"
         />
-        <Input
-          label="Password"
-          size="lg"
-          onChange={handleChange}
-          type={showPassword ? "text" : "password"}
-          required
-          id="password"
-          error={error}
-          icon={
-            showPassword ? (
-              <Visibility
-                onClick={handleClickShowPassword}
-                className="cursor-pointer"
-              />
-            ) : (
-              <VisibilityOff
-                onClick={handleClickShowPassword}
-                className="cursor-pointer"
-              />
-            )
-          }
-        />
+        <PasswordInput error={error} onChange={handleChange} />
+        <Typography
+          variant="small"
+          color="gray"
+          className="flex items-center gap-1 font-normal text-xs"
+        >
+          <InformationCircleIcon className="w-4 h-4 -mt-px" />
+          Use at least 8 characters.
+        </Typography>
         <Input
           label="First Name"
           size="lg"

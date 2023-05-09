@@ -22,7 +22,6 @@ import Spinner from "../Spinner";
 
 const Reviews = ({ product }) => {
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [active, setActive] = useState(1);
   const [numReviews, setNumReviews] = useState(1);
@@ -69,7 +68,6 @@ const Reviews = ({ product }) => {
     await getDocs(reviewsQuery)
       .then((response) => {
         setReviews(response.docs);
-        console.log("hey");
       })
       .catch((error) => {
         console.log("Unable to fetch reviews:", error);
@@ -95,8 +93,6 @@ const Reviews = ({ product }) => {
     );
 
     const coll = collection(db, "reviews");
-
-    console.log(product.id);
 
     fetchReviews(reviewsQuery);
     fetchReviewCount(coll);

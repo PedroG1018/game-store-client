@@ -1,8 +1,14 @@
 import { StarIcon } from "@heroicons/react/24/solid";
 import icon from "../img/1up.png";
 import { useNavigate } from "react-router-dom";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { Input } from "@material-tailwind/react";
+import { useState } from "react";
+import SearchInput from "../components/SearchInput";
 
 const Home = () => {
+  const [search, setSearch] = useState("");
+
   const navigate = useNavigate();
 
   const data = [
@@ -42,6 +48,7 @@ const Home = () => {
 
   return (
     <main className="p-10 max-w-screen-xl mx-auto">
+      <SearchInput />
       <div className="flex mx-auto space-x-2 text-center">
         <div>
           <img src={icon} alt="logo" className="w-full" />

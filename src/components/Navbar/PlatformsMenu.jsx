@@ -13,7 +13,7 @@ import {
 } from "@material-tailwind/react";
 import React, { useState } from "react";
 
-const NavListMenu = () => {
+const PlatformsMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navListMenuItems = [
@@ -40,7 +40,7 @@ const NavListMenu = () => {
   };
 
   const renderItems = navListMenuItems.map(({ title, description }) => (
-    <a href="#" key={title}>
+    <a href={`/${title.toLowerCase()}`} key={title}>
       <MenuItem>
         <Typography variant="h6" color="blue-gray" className="mb-1">
           {title}
@@ -96,4 +96,4 @@ const NavListMenu = () => {
   );
 };
 
-export default NavListMenu;
+export default PlatformsMenu;
