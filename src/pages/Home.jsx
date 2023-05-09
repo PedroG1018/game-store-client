@@ -7,8 +7,6 @@ import { useState } from "react";
 import SearchInput from "../components/SearchInput";
 
 const Home = () => {
-  const [search, setSearch] = useState("");
-
   const navigate = useNavigate();
 
   const data = [
@@ -47,7 +45,7 @@ const Home = () => {
   ];
 
   return (
-    <main className="p-10 max-w-screen-xl mx-auto">
+    <main className="px-10 pt-4 max-w-screen-xl mx-auto">
       <SearchInput />
       <div className="flex mx-auto space-x-2 text-center">
         <div>
