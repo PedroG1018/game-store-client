@@ -111,7 +111,7 @@ const Cart = () => {
     <div className="flex flex-col mx-auto max-w-screen-lg w-full justify-center my-10">
       <Spinner open={open} />
       <Typography variant="h3" className="text-center mb-8">
-        Your Cart
+        My Cart
       </Typography>
       <div className="md:w-[36em] w-[30em] justify-center mx-auto">
         <hr />
@@ -171,7 +171,9 @@ const Cart = () => {
           <Typography className="font-semibold">${subTotal}</Typography>
         </div>
 
-        <Button className="w-full py-4 capitalize text-md">Checkout</Button>
+        <Button className="w-full py-4 capitalize text-md rounded-none bg-blue-900">
+          Checkout
+        </Button>
       </div>
     </div>
   );

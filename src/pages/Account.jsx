@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Tabs,
   TabsHeader,
@@ -6,52 +6,66 @@ import {
   Tab,
   TabPanel,
   Typography,
+  Card,
+  Button,
 } from "@material-tailwind/react";
 import {
-  Square3Stack3DIcon,
-  UserCircleIcon,
   Cog6ToothIcon,
   ListBulletIcon,
+  ArchiveBoxIcon,
+  PlusIcon,
 } from "@heroicons/react/24/solid";
-import { ListItemIcon } from "@mui/material";
+import { AuthContext } from "../context/AuthContext";
+import { db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { LocationOn } from "@mui/icons-material";
+import Address from "../components/Addresses/Address";
 
-export default function Example() {
+const Account = () => {
+  const { currentUser } = useContext(AuthContext);
+  const [user, setUser] = useState({});
+
   const data = [
     {
       label: "Orders",
       value: "orders",
-      icon: Square3Stack3DIcon,
-      desc: `It really matters and then like it really doesn't matter.
-      What matters is the people who are sparked by it. And the people
-      who are like offended by it, it doesn't matter.`,
+      icon: ArchiveBoxIcon,
     },
     {
       label: "Wishlist",
       value: "wishlist",
       icon: ListBulletIcon,
-      desc: `Because it's about motivating the doers. Because I'm here
-      to follow my dreams and inspire other people to follow their dreams, too.`,
     },
     {
       label: "Settings",
       value: "settings",
       icon: Cog6ToothIcon,
-      desc: `We're not always in the position that we want to be at.
-      We're constantly growing. We're constantly making mistakes. We're
-      constantly trying to express ourselves and actualize our dreams.`,
     },
     {
-      label: "Address Book",
+      label: "Addresses",
       value: "addresses",
-      icon: Cog6ToothIcon,
-      desc: `We're not always in the position that we want to be at.
-      We're constantly growing. We're constantly making mistakes. We're
-      constantly trying to express ourselves and actualize our dreams.`,
+      icon: LocationOn,
     },
   ];
+
+  const fetchUser = async () => {
+    const docRef = doc(db, "users", currentUser.uid);
+    await getDoc(docRef)
+      .then((response) => {
+        setUser(response.data());
+      })
+      .catch((error) => {
+        console.log("Unable to fetch user:", error);
+      });
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
     <>
-      <Typography className="text-blue-900 text-center mt-10" variant="h4">
+      <Typography className="text-blue-900 text-center mt-6" variant="h3">
         MY ACCOUNT
       </Typography>
       <Tabs value="orders" className="mt-4 max-w-3xl mx-auto px-4">
@@ -65,14 +79,47 @@ export default function Example() {
             </Tab>
           ))}
         </TabsHeader>
-        <TabsBody>
+        <TabsBody
+          animate={{
+            initial: { y: 250 },
+            mount: { y: 0 },
+            unmount: { y: 250 },
+          }}
+        >
           {data.map(({ value, desc }) => (
-            <TabPanel key={value} value={value}>
-              {desc}
+            <TabPanel
+              key={value}
+              value={value}
+              className="grid md:grid-cols-3 sm:grid-cols-2"
+            >
+              {value === "addresses" &&
+                user.addresses !== undefined &&
+                user.addresses.map(
+                  ({ address, city, state, country, zipCode }, index) => (
+                    <Address
+                      address={address}
+                      city={city}
+                      state={state}
+                      country={country}
+                      zipCode={zipCode}
+                    />
+                  )
+                )}
+              {value === "addresses" && (
+                <Card
+                  shadow={false}
+                  className="border p-4 rounded-none border-gray-600 text-black w-full h-full flex my-auto mx-auto hover:text-gray-600 cursor-pointer"
+                >
+                  <PlusIcon className="w-10 flex mx-auto my-auto" />
+                  <Typography className="text-center">New Address</Typography>
+                </Card>
+              )}
             </TabPanel>
           ))}
         </TabsBody>
       </Tabs>
     </>
   );
-}
+};
+
+export default Account;
