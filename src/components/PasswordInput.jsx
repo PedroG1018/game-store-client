@@ -2,7 +2,7 @@ import { Input } from "@material-tailwind/react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import React, { useState } from "react";
 
-const PasswordInput = ({ error, onChange }) => {
+const PasswordInput = ({ label, error, onChange }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
@@ -11,7 +11,7 @@ const PasswordInput = ({ error, onChange }) => {
 
   return (
     <Input
-      label="Password"
+      label={label}
       size="lg"
       onChange={onChange}
       type={showPassword ? "text" : "password"}

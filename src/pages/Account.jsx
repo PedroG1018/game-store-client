@@ -20,6 +20,7 @@ import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { LocationOn } from "@mui/icons-material";
 import Address from "../components/Addresses/Address";
+import UpdateForm from "../components/AccountSettings/UpdateForm";
 
 const Account = () => {
   const { currentUser } = useContext(AuthContext);
@@ -86,36 +87,43 @@ const Account = () => {
             unmount: { y: 250 },
           }}
         >
-          {data.map(({ value, desc }) => (
-            <TabPanel
-              key={value}
-              value={value}
-              className="grid md:grid-cols-3 sm:grid-cols-2"
-            >
-              {value === "addresses" &&
-                user.addresses !== undefined &&
-                user.addresses.map(
-                  ({ address, city, state, country, zipCode }, index) => (
-                    <Address
-                      address={address}
-                      city={city}
-                      state={state}
-                      country={country}
-                      zipCode={zipCode}
-                    />
-                  )
-                )}
-              {value === "addresses" && (
-                <Card
-                  shadow={false}
-                  className="border p-4 rounded-none border-gray-600 text-black w-full h-full flex my-auto mx-auto hover:text-gray-600 cursor-pointer"
+          {data.map(({ value }) => {
+            if (value === "settings") {
+              return (
+                <TabPanel key={value} value={value}>
+                  <UpdateForm />
+                </TabPanel>
+              );
+            } else if (value === "addresses") {
+              return (
+                <TabPanel
+                  key={value}
+                  value={value}
+                  className="grid md:grid-cols-3 sm:grid-cols-2"
                 >
-                  <PlusIcon className="w-10 flex mx-auto my-auto" />
-                  <Typography className="text-center">New Address</Typography>
-                </Card>
-              )}
-            </TabPanel>
-          ))}
+                  {user.addresses !== undefined &&
+                    user.addresses.map(
+                      ({ address, city, state, country, zipCode }, index) => (
+                        <Address
+                          address={address}
+                          city={city}
+                          state={state}
+                          country={country}
+                          zipCode={zipCode}
+                        />
+                      )
+                    )}
+                  <Card
+                    shadow={false}
+                    className="border p-4 rounded-none border-gray-600 text-black w-full h-full flex my-auto mx-auto hover:text-gray-600 cursor-pointer"
+                  >
+                    <PlusIcon className="w-10 flex mx-auto my-auto" />
+                    <Typography className="text-center">New Address</Typography>
+                  </Card>
+                </TabPanel>
+              );
+            }
+          })}
         </TabsBody>
       </Tabs>
     </>
