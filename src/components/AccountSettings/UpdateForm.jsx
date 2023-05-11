@@ -3,6 +3,13 @@ import React, { useContext, useEffect, useState } from "react";
 import PasswordInput from "../PasswordInput";
 import ReactPhoneInput from "react-phone-input-material-ui";
 import { AuthContext } from "../../context/AuthContext";
+import {
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  updatePassword,
+} from "firebase/auth";
+import { auth } from "../../firebase";
+import { toast } from "react-hot-toast";
 
 const UpdateForm = () => {
   const [data, setData] = useState({
@@ -36,10 +43,28 @@ const UpdateForm = () => {
     return () => clearTimeout(timer);
   };
 
-  const handleUpdate = async (e) => {
+  const handleUpdate = (e) => {
     e.preventDefault();
 
-    console.log(currentUser);
+    if (data.currentPassword.length >= 8 && data.password.length >= 8) {
+      signInWithEmailAndPassword(auth, currentUser.email, data.currentPassword)
+        .then(() => {
+          updatePassword(auth.currentUser, data.password)
+            .then(() => {
+              toast.success("Password successfully updated.");
+            })
+            .catch((error) => {
+              console.log("Unable to update password:", error);
+              toast.error("Unable to update Password.");
+            });
+        })
+        .catch((error) => {
+          console.log("Current password mismatch:", error);
+          toast.error("Current password does not match.");
+        });
+    } else {
+      toast.error("Password fields must be at least 8 characters long.");
+    }
   };
 
   return (

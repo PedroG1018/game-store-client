@@ -7,11 +7,9 @@ import {
   TabPanel,
   Typography,
   Card,
-  Button,
 } from "@material-tailwind/react";
 import {
   Cog6ToothIcon,
-  ListBulletIcon,
   ArchiveBoxIcon,
   PlusIcon,
 } from "@heroicons/react/24/solid";
