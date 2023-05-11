@@ -33,11 +33,6 @@ const Account = () => {
       icon: ArchiveBoxIcon,
     },
     {
-      label: "Wishlist",
-      value: "wishlist",
-      icon: ListBulletIcon,
-    },
-    {
       label: "Settings",
       value: "settings",
       icon: Cog6ToothIcon,
@@ -67,7 +62,7 @@ const Account = () => {
   return (
     <>
       <Typography className="text-blue-900 text-center mt-6" variant="h3">
-        MY ACCOUNT
+        My Account
       </Typography>
       <Tabs value="orders" className="mt-4 max-w-3xl mx-auto px-4">
         <TabsHeader>

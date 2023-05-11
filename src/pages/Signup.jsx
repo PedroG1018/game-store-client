@@ -61,7 +61,7 @@ const Signup = () => {
         country: data.country,
         phoneNumber: data.phoneNumber,
         zipCode: data.zipCode,
-        timeStamp: serverTimestamp(),
+        createdAt: new Date(),
       })
         .then(async () => {
           await addDoc(collection(db, "cart"), {
@@ -118,14 +118,6 @@ const Signup = () => {
           id="email"
         />
         <PasswordInput error={error} onChange={handleChange} />
-        <Typography
-          variant="small"
-          color="gray"
-          className="flex items-center gap-1 font-normal text-xs"
-        >
-          <InformationCircleIcon className="w-4 h-4 -mt-px" />
-          Use at least 8 characters.
-        </Typography>
         <Input
           label="First Name"
           size="lg"
