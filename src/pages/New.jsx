@@ -12,57 +12,78 @@ import {
   Typography,
   Button,
   Textarea,
-  Radio,
 } from "@material-tailwind/react";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { toast } from "react-hot-toast";
+import Spinner from "../components/Spinner";
 
 const New = () => {
   const [file, setFile] = useState("");
   const [data, setData] = useState({});
+  const [open, setOpen] = useState(false);
   const [percent, setPercent] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const uploadFile = () => {
-      const storageRef = ref(storage, file.name);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-          console.log("Upload is " + progress + " % done");
-          setPercent(progress);
-
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-            default:
-              break;
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setData((prev) => ({ ...prev, image: downloadURL }));
-          });
-        }
-      );
+    const addProduct = async () => {
+      await addDoc(collection(db, "products"), data)
+        .then((response) => {
+          console.log("Product successfully added:", response.id);
+          toast.success("Product added to inventory.");
+          navigate(0);
+        })
+        .catch((error) => {
+          console.log("Unable to add product:", error);
+        });
     };
 
-    // run upload file function if a file has been selected
-    file && uploadFile();
-  }, [file]);
+    data.image && addProduct();
+  }, [data.image]);
+
+  const handleAdd = (e) => {
+    e.preventDefault();
+
+    setOpen(true);
+
+    if (!file) {
+      console.log("empty file");
+      return;
+    }
+
+    const storageRef = ref(storage, file.name);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+        console.log("Upload is " + progress + " % done");
+        setPercent(progress);
+
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          setData((prev) => ({ ...prev, image: downloadURL }));
+        });
+      }
+    );
+
+    setOpen(false);
+  };
 
   // updates data from changes in input fields
   const handleInput = (e) => {
@@ -74,122 +95,13 @@ const New = () => {
     setData({ ...data, [id]: value });
   };
 
-  const handleRadio = (e) => {
-    const name = e.target.name;
-    const id = e.target.id;
-
-    console.log(name + ": " + id);
-
-    setData({ ...data, [name]: id });
-  };
-
-  const handleAdd = async (e) => {
-    e.preventDefault();
-
-    try {
-      const res = await addDoc(collection(db, "products"), data);
-      alert(res.id);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
-    <Card
-      color="transparent"
-      shadow={false}
-      className="mx-auto my-10 items-center"
-    >
-      <Typography variant="h3" className="text-blue-700">
-        NEW PRODUCT
+    <Card color="transparent" shadow={false} className="mx-auto items-center">
+      <Typography variant="h3" className="text-black">
+        New Product
       </Typography>
-      <form className="mt-8 mb-2 lg:flex lg:flex-row justify-center gap-10 lg:w-full">
-        <div>
-          <div className="mb-4 flex flex-col gap-6">
-            <Input
-              size="lg"
-              label="Product Name"
-              onChange={handleInput}
-              id="name"
-            />
-            <Input size="lg" label="Price" onChange={handleInput} id="price" />
-            <Input
-              type="number"
-              size="lg"
-              label="Quantity"
-              onChange={handleInput}
-              id="quantity"
-            />
-          </div>
-          <div>
-            <Typography className="ml-3 font-semibold">Condition</Typography>
-            <Radio
-              id="new"
-              name="condition"
-              label="New"
-              onChange={handleRadio}
-            />
-            <Radio
-              id="refurbished"
-              name="condition"
-              label="Refurbished"
-              onChange={handleRadio}
-            />
-            <Radio
-              id="used"
-              name="condition"
-              label="Used"
-              onChange={handleRadio}
-            />
-          </div>
-          <div className="mb-4">
-            <Typography className="ml-3 font-semibold">Type</Typography>
-            <Radio
-              id="console"
-              name="type"
-              label="Console"
-              onChange={handleRadio}
-            />
-            <Radio id="game" name="type" label="Game" onChange={handleRadio} />
-          </div>
-          <div className="mb-6 flex flex-col gap-6">
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Release Date"
-                slotProps={{ textField: { helperText: "MM/DD/YYYY" } }}
-                onChange={(newValue) => {
-                  const releaseDate = newValue.$d.toLocaleDateString();
-                  setData({ ...data, releaseDate: releaseDate });
-                }}
-              />
-            </LocalizationProvider>
-            <Select
-              label="Select Platform"
-              id="platform"
-              onChange={(newValue) => {
-                setData({ ...data, platform: newValue });
-              }}
-            >
-              <Option value="NES">NES</Option>
-              <Option value="SNES">SNES</Option>
-              <Option value="N64">N64</Option>
-              <Option value="Gamecube">Gamecube</Option>
-              <Option value="Wii">Wii</Option>
-            </Select>
-            <Select
-              label="Select Region"
-              id="region"
-              onChange={(newValue) => {
-                setData({ ...data, region: newValue });
-              }}
-            >
-              <Option value="NTSC (US, CANADA)">NTSC (US, CANADA)</Option>
-              <Option value="NTSJ (JAPAN)">NTSJ (JAPAN)</Option>
-            </Select>
-          </div>
-          <Textarea label="Description" id="desc" onChange={handleInput} />
-        </div>
-        <div className="max-w-sm items-center mt-4 lg:mt-0">
+      <form className="mt-4 mb-2 lg:flex lg:flex-row justify-center gap-10 lg:w-full">
+        <div className="max-w-sm lg:mt-0 mx-auto lg:mx-0 mb-4">
           <img
             src={
               file
@@ -211,10 +123,101 @@ const New = () => {
             />
           </div>
         </div>
+        <div className="flex flex-col space-y-4">
+          <Input
+            size="lg"
+            label="Product Name"
+            onChange={handleInput}
+            id="name"
+            required
+            autoFocus
+          />
+          <div className="flex space-x-4">
+            <Input size="lg" label="Price" onChange={handleInput} id="price" />
+            <Input
+              type="number"
+              size="lg"
+              label="Quantity"
+              onChange={handleInput}
+              required
+              id="quantity"
+            />
+          </div>
+          <div className="flex space-x-4">
+            <Select
+              size="lg"
+              label="Condition"
+              required
+              onChange={(newValue) => {
+                setData({ ...data, condition: newValue });
+              }}
+            >
+              <Option value="new">New</Option>
+              <Option value="refurbished">Refurbished</Option>
+              <Option value="used">Used</Option>
+            </Select>
+            <Select
+              size="lg"
+              label="Type"
+              required
+              onChange={(newValue) => {
+                setData({ ...data, type: newValue });
+              }}
+            >
+              <Option value="game">Game</Option>
+              <Option value="console">Console</Option>
+            </Select>
+          </div>
+          <Input
+            size="lg"
+            label="Release Date"
+            type="date"
+            id="releaseDate"
+            required
+            onChange={handleInput}
+          />
+          <div className="flex space-x-4">
+            <Select
+              size="lg"
+              label="Select Platform"
+              id="platform"
+              required
+              onChange={(newValue) => {
+                setData({ ...data, platform: newValue });
+              }}
+            >
+              <Option value="NES">NES</Option>
+              <Option value="SNES">SNES</Option>
+              <Option value="N64">N64</Option>
+              <Option value="Gamecube">Gamecube</Option>
+              <Option value="Wii">Wii</Option>
+              <Option value="Switch">Switch</Option>
+            </Select>
+            <Select
+              size="lg"
+              label="Select Region"
+              id="region"
+              required
+              onChange={(newValue) => {
+                setData({ ...data, region: newValue });
+              }}
+            >
+              <Option value="NTSC (US, CANADA)">NTSC (US, CANADA)</Option>
+              <Option value="NTSJ (JAPAN)">NTSJ (JAPAN)</Option>
+            </Select>
+          </div>
+          <Textarea
+            label="Description"
+            id="desc"
+            required
+            onChange={handleInput}
+          />
+        </div>
       </form>
-      <Button className="mt-6 w-60" onClick={handleAdd}>
+      <Button className="mt-6 w-40 capitalize bg-blue-900" onClick={handleAdd}>
         Add
       </Button>
+      <Spinner open={open} />
     </Card>
   );
 };

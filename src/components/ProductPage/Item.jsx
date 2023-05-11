@@ -102,7 +102,7 @@ const Item = ({ item, productId }) => {
   return (
     <div className="flex my-10 justify-center mx-auto space-x-8">
       <div className="max-w-[24em] rounded-3xl border p-2">
-        <img src={item.image} alt="product" />
+        <img src={item.image} alt="product" className="h-full" />
       </div>
       <div className="flex flex-col min-w-[30em]">
         <Typography
