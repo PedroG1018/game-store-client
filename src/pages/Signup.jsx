@@ -104,10 +104,10 @@ const Signup = () => {
   };
 
   return (
-    <Card className="mx-auto w-full max-w-lg my-6">
+    <Card className="mx-auto w-full max-w-lg" shadow={false}>
       <form className="p-10 flex flex-col gap-4" onSubmit={handleSubmit}>
-        <Typography variant="h3" className="text-center text-blue-900">
-          CREATE ACCOUNT
+        <Typography variant="h3" className="text-center text-black">
+          Create Account
         </Typography>
         <Input
           label="Email"
@@ -117,7 +117,12 @@ const Signup = () => {
           required
           id="email"
         />
-        <PasswordInput error={error} onChange={handleChange} />
+        <PasswordInput
+          label="Password"
+          id="password"
+          error={error}
+          onChange={handleChange}
+        />
         <Input
           label="First Name"
           size="lg"
@@ -182,7 +187,7 @@ const Signup = () => {
           Already have an account?{" "}
           <a
             href="/login"
-            className="font-medium text-blue-500 transition-colors hover:text-blue-700"
+            className="font-medium text-blue-700 transition-colors hover:text-blue-900"
           >
             Sign In
           </a>

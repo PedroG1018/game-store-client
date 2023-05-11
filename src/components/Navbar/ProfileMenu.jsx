@@ -53,7 +53,7 @@ const ProfileMenu = () => {
     }
 
     signOut(auth)
-      .then((userCredential) => {
+      .then(() => {
         // Sign-out successful
         dispatch({ type: "LOGOUT" });
         toast.success("Logged out");
