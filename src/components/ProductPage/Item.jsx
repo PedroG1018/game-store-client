@@ -1,4 +1,4 @@
-import { Button, Typography } from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react/";
 import { Rating } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
