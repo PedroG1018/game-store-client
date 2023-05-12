@@ -1,10 +1,11 @@
+import { Typography } from "@material-tailwind/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Brands = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex justify-center mt-10 space-x-4">
+    <div className="flex justify-center space-x-4">
       <div
         className="bg-gray-100 p-10 rounded-3xl w-[30em] items-center flex h-[10em] border border-black border-opacity-30 hover:border-opacity-100 cursor-pointer"
         onClick={() => navigate("/platforms/nintendo")}
