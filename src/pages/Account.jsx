@@ -19,6 +19,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { LocationOn } from "@mui/icons-material";
 import Address from "../components/Addresses/Address";
 import UpdateForm from "../components/AccountSettings/UpdateForm";
+import Header from "../components/Header";
 
 const Account = () => {
   const { currentUser } = useContext(AuthContext);
@@ -59,9 +60,7 @@ const Account = () => {
 
   return (
     <>
-      <Typography className="text-blue-900 text-center mt-6" variant="h3">
-        My Account
-      </Typography>
+      <Header title="My Account" />
       <Tabs value="orders" className="mt-4 max-w-3xl mx-auto px-4">
         <TabsHeader>
           {data.map(({ label, value, icon }) => (

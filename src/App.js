@@ -18,6 +18,7 @@ import New from "./pages/New";
 import Product from "./pages/Product";
 import Signup from "./pages/Signup";
 import Cart from "./pages/Cart";
+import Contact from "./pages/Contact";
 
 const Layout = () => {
   return (
@@ -64,6 +65,7 @@ function App() {
               </RequireNoAuth>
             }
           />
+          <Route path="contact" element={<Contact />} />
           <Route index element={<Home />} />
           <Route path="platforms/">
             {["nintendo", "playstation", "xbox", "sega"].map((platform) => (

@@ -13,6 +13,7 @@ import { AuthContext } from "../context/AuthContext";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import Header from "../components/Header";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -108,74 +109,78 @@ const Cart = () => {
   };
 
   return (
-    <div className="flex flex-col mx-auto max-w-screen-lg w-full justify-center my-10">
-      <Spinner open={open} />
-      <Typography variant="h3" className="text-center mb-8">
-        My Cart
-      </Typography>
-      <div className="md:w-[36em] w-[30em] justify-center mx-auto">
-        <hr />
-        {products.map((product, index) => {
-          return (
-            <div className="flex justify-between my-6" key={product.id}>
-              <div className="flex space-x-2">
-                <img
-                  src={product.data().image}
-                  alt="shirt"
-                  className="w-[140px]"
-                />
-                <div>
-                  <Typography className="font-medium">
-                    {product.data().name}
-                  </Typography>
-                  <Typography className="capitalize">
-                    {product.data().condition}
-                  </Typography>
-                  {product.data().quantity === 0 ? (
-                    <Typography color="red">Out of Stock</Typography>
-                  ) : (
-                    <Typography color="green">In Stock</Typography>
-                  )}
+    <>
+      <Header title="My Cart" />
+      <div className="flex flex-col mx-auto max-w-screen-lg w-full justify-center my-10">
+        <Spinner open={open} />
 
-                  <div className="flex space-x-2 mt-4">
-                    <select
-                      label="Qty"
-                      className="w-[4em] h-[2em] border border-gray-400 rounded-lg"
-                      defaultValue={quantities[index]}
-                    >
-                      <option className="">1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </select>
-                    <Typography
-                      className="text-red-500 font-medium mt-2 cursor-pointer hover:font-semibold my-auto"
-                      onClick={() => handleRemove(cartItems[index].id)}
-                    >
-                      Remove
+        <div className="md:w-[36em] w-[30em] justify-center mx-auto">
+          <hr />
+          {products.map((product, index) => {
+            return (
+              <div className="flex justify-between my-6" key={product.id}>
+                <div className="flex space-x-2">
+                  <img
+                    src={product.data().image}
+                    alt="shirt"
+                    className="w-[140px]"
+                  />
+                  <div>
+                    <Typography className="font-medium">
+                      {product.data().name}
                     </Typography>
+                    <Typography className="capitalize">
+                      {product.data().condition}
+                    </Typography>
+                    {product.data().quantity === 0 ? (
+                      <Typography color="red">Out of Stock</Typography>
+                    ) : (
+                      <Typography color="green">In Stock</Typography>
+                    )}
+
+                    <div className="flex space-x-2 mt-4">
+                      <select
+                        label="Qty"
+                        className="w-[4em] h-[2em] border border-gray-400 rounded-lg"
+                        defaultValue={quantities[index]}
+                      >
+                        <option className="">1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                      <Typography
+                        className="text-red-500 font-medium mt-2 cursor-pointer hover:font-semibold my-auto"
+                        onClick={() => handleRemove(cartItems[index].id)}
+                      >
+                        Remove
+                      </Typography>
+                    </div>
                   </div>
                 </div>
+                <Typography className="font-medium">
+                  ${product.data().price}
+                </Typography>
               </div>
-              <Typography className="font-medium">
-                ${product.data().price}
-              </Typography>
-            </div>
-          );
-        })}
-      </div>
-      <div className="md:w-[36em] w-[30em] justify-center items-center mx-auto mt-6">
-        <div className="flex justify-between mb-6">
-          <Typography className="font-semibold">Subtotal</Typography>
-          <Typography className="font-semibold">${subTotal}</Typography>
+            );
+          })}
         </div>
+        <div className="md:w-[36em] w-[30em] justify-center items-center mx-auto mt-6">
+          <div className="flex justify-between mb-6">
+            <Typography className="font-semibold">Subtotal</Typography>
+            <Typography className="font-semibold">${subTotal}</Typography>
+          </div>
 
-        <Button className="w-full py-4 capitalize text-md rounded-none bg-blue-900">
-          Checkout
-        </Button>
+          <Button
+            className="w-full capitalize text-md rounded-none bg-blue-900"
+            size="lg"
+          >
+            Checkout
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
