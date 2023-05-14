@@ -8,7 +8,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import Nav from "./components/Nav";
+import Nav from "./components/Navbar/Nav";
 import Platform from "./pages/Platform";
 import Footer from "./components/Footer";
 import Account from "./pages/Account";

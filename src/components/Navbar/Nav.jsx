@@ -6,8 +6,9 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Bars2Icon } from "@heroicons/react/24/outline";
-import ProfileMenu from "./Navbar/ProfileMenu";
-import NavList from "./Navbar/NavList";
+import ProfileMenu from "./ProfileMenu";
+import NavList from "./NavList";
+import icon from "../../img/1up.png";
 
 const Nav = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -26,13 +27,15 @@ const Nav = () => {
   return (
     <Navbar className="w-full p-2 lg:pl-6 mx-auto" shadow={false}>
       <div className="relative mx-auto flex items-center text-blue-gray-900">
-        <Typography
-          as="a"
-          href="/"
-          className="mr-4 ml-2 cursor-pointer py-1.5 font-bold"
-        >
-          1-UP Store
-        </Typography>
+        <a href="/">
+          <div className="flex items-center">
+            <Typography className="mr-2 ml-2 py-1.5 font-bold">1-Up</Typography>
+            <img src={icon} className="h-8" alt="logo" />
+            <Typography className="mr-2 ml-2 py-1.5 font-bold">
+              Store
+            </Typography>
+          </div>
+        </a>
         <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
           <NavList />
         </div>
