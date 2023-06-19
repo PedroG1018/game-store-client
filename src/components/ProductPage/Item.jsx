@@ -57,9 +57,7 @@ const Item = ({ item, productId }) => {
   }, [cartId]);
 
   // handles
-  const handleQuantity = (e, type) => {
-    e.preventDefault();
-
+  const handleQuantity = (type) => {
     if (type === "+") {
       if (quantity === 9) {
         toast.error(`Limit ${quantity} per customer`);
@@ -101,8 +99,8 @@ const Item = ({ item, productId }) => {
 
   return (
     <div className="flex my-10 justify-center mx-auto space-x-8">
-      <div className="max-w-[24em] rounded-3xl border p-2">
-        <img src={item.image} alt="product" className="h-full" />
+      <div className="p-2">
+        <img src={item.image} alt="product" className="h-[30em]" />
       </div>
       <div className="flex flex-col min-w-[30em]">
         <Typography
@@ -158,12 +156,6 @@ const Item = ({ item, productId }) => {
           onClick={handleAddToCart}
         >
           Add to Cart
-        </Button>
-        <Button
-          fullWidth
-          className="bg-gray-100 px-6 rounded-lg border font-semibold hover:bg-red-600 hover:text-white text-black capitalize text-sm transition-colors"
-        >
-          Add to Wishlist
         </Button>
         <Spinner open={open} />
       </div>

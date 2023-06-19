@@ -90,9 +90,7 @@ const Reviews = ({ product }) => {
     const fetchReviewCount = async (coll) => {
       await getDocs(coll)
         .then((response) => {
-          console.log("total reviews:", response.docs.length);
           setNumReviews(Math.ceil(response.docs.length / 5));
-          console.log("numReviews:", numReviews);
         })
         .catch((error) => {
           console.log("Unable to fetch review count:", error);

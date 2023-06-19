@@ -10,7 +10,7 @@ import Welcome from "../components/Home/Welcome";
 
 const Home = () => {
   return (
-    <main className="px-10 pt-4 max-w-screen-lg mx-auto">
+    <main className="px-10 max-w-screen-lg mx-auto">
       <SearchInput />
       <Welcome />
       <Typography variant="h3" className="text-center mb-4">

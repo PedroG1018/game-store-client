@@ -10,10 +10,12 @@ import {
   where,
 } from "firebase/firestore";
 import { AuthContext } from "../context/AuthContext";
-import { db } from "../firebase";
+import { db, functions } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import Header from "../components/Header";
+import { loadStripe } from "@stripe/stripe-js";
+import { httpsCallable } from "firebase/functions";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -108,64 +110,91 @@ const Cart = () => {
       });
   };
 
+  const checkout = async () => {
+    const createStripeCheckout = httpsCallable(
+      functions,
+      "createStripeCheckout"
+    );
+    const stripe = await loadStripe(
+      "pk_test_51Moq2zFStkwWp0dx3CRWnXeHrt1e7MQHV3i1OEpr7gQNWJbrq1TcMZDfP2WN4qRRrbeN2VsSFhTMWoLFrCsrKHkj00PNyon7cb"
+    );
+
+    createStripeCheckout().then((response) => {
+      const sessionId = response.data.id;
+      stripe.redirectToCheckout({ sessionId: sessionId });
+    });
+  };
+
+  console.log(subTotal);
+
   return (
     <>
       <Header title="My Cart" />
       <div className="flex flex-col mx-auto max-w-screen-lg w-full justify-center my-10">
         <Spinner open={open} />
 
-        <div className="md:w-[36em] w-[30em] justify-center mx-auto">
-          <hr />
-          {products.map((product, index) => {
-            return (
-              <div className="flex justify-between my-6" key={product.id}>
-                <div className="flex space-x-2">
-                  <img
-                    src={product.data().image}
-                    alt="shirt"
-                    className="w-[140px]"
-                  />
-                  <div>
-                    <Typography className="font-medium">
-                      {product.data().name}
-                    </Typography>
-                    <Typography className="capitalize">
-                      {product.data().condition}
-                    </Typography>
-                    {product.data().quantity === 0 ? (
-                      <Typography color="red">Out of Stock</Typography>
-                    ) : (
-                      <Typography color="green">In Stock</Typography>
-                    )}
-
-                    <div className="flex space-x-2 mt-4">
-                      <select
-                        label="Qty"
-                        className="w-[4em] h-[2em] border border-gray-400 rounded-lg"
-                        defaultValue={quantities[index]}
-                      >
-                        <option className="">1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                      </select>
-                      <Typography
-                        className="text-red-500 font-medium mt-2 cursor-pointer hover:font-semibold my-auto"
-                        onClick={() => handleRemove(cartItems[index].id)}
-                      >
-                        Remove
+        {products.length > 0 ? (
+          <div className="md:w-[36em] w-[30em] justify-center mx-auto">
+            <hr />
+            {products.map((product, index) => {
+              return (
+                <div className="flex justify-between my-6" key={product.id}>
+                  <div className="flex space-x-2">
+                    <img
+                      src={product.data().image}
+                      alt="shirt"
+                      className="w-[140px]"
+                    />
+                    <div>
+                      <Typography className="font-medium">
+                        {product.data().name}
                       </Typography>
+                      <Typography className="capitalize">
+                        {product.data().condition}
+                      </Typography>
+                      {product.data().quantity === 0 ? (
+                        <Typography color="red">Out of Stock</Typography>
+                      ) : (
+                        <Typography color="green">In Stock</Typography>
+                      )}
+
+                      <div className="flex space-x-2 mt-4">
+                        <select
+                          label="Qty"
+                          className="w-[4em] h-[2em] border border-gray-400 rounded-lg"
+                          defaultValue={quantities[index]}
+                        >
+                          <option className="">1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                        <Typography
+                          className="text-red-500 font-medium mt-2 cursor-pointer hover:font-semibold my-auto"
+                          onClick={() => handleRemove(cartItems[index].id)}
+                        >
+                          Remove
+                        </Typography>
+                      </div>
                     </div>
                   </div>
+                  <Typography className="font-medium">
+                    ${product.data().price}
+                  </Typography>
                 </div>
-                <Typography className="font-medium">
-                  ${product.data().price}
-                </Typography>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        ) : (
+          <Typography
+            as="a"
+            href="/products"
+            className="text-center hover:text-blue-700"
+          >
+            Add items to your cart
+          </Typography>
+        )}
         <div className="md:w-[36em] w-[30em] justify-center items-center mx-auto mt-6">
           <div className="flex justify-between mb-6">
             <Typography className="font-semibold">Subtotal</Typography>
@@ -175,6 +204,8 @@ const Cart = () => {
           <Button
             className="w-full capitalize text-md rounded-none bg-blue-900"
             size="lg"
+            disabled={products.length === 0}
+            onClick={checkout}
           >
             Checkout
           </Button>

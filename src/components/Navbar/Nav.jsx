@@ -4,6 +4,7 @@ import {
   Navbar,
   MobileNav,
   IconButton,
+  Collapse,
 } from "@material-tailwind/react";
 import { Bars2Icon } from "@heroicons/react/24/outline";
 import ProfileMenu from "./ProfileMenu";
@@ -50,9 +51,9 @@ const Nav = () => {
         </IconButton>
         <ProfileMenu />
       </div>
-      <MobileNav open={isNavOpen} className="overflow-scroll">
+      <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />
-      </MobileNav>
+      </Collapse>
     </Navbar>
   );
 };

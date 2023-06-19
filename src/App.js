@@ -19,6 +19,7 @@ import Product from "./pages/Product";
 import Signup from "./pages/Signup";
 import Cart from "./pages/Cart";
 import Contact from "./pages/Contact";
+import { loadStripe } from "@stripe/stripe-js";
 
 const Layout = () => {
   return (
@@ -34,7 +35,7 @@ const Layout = () => {
   );
 };
 
-function App() {
+const App = () => {
   const { currentUser } = useContext(AuthContext);
 
   const RequireAuth = ({ children }) => {
@@ -100,6 +101,6 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

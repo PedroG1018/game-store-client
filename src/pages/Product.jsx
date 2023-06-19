@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Item from "../components/ProductPage/Item";
 import Details from "../components/ProductPage/Details";
 import Reviews from "../components/ProductPage/Reviews";
+import SearchInput from "../components/SearchInput";
 import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
@@ -35,6 +36,8 @@ const Product = () => {
 
   return (
     <div className="max-w-screen-lg mx-auto">
+      <SearchInput />
+
       <Spinner open={open} />
       <Item item={item} productId={product.id} />
       <Details details={item} />
