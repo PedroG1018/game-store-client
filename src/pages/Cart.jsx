@@ -32,10 +32,10 @@ const Cart = () => {
     let total = 0;
 
     for (let i = 0; i < products.length; i++) {
-      total += products[i].data().price * quantities[i];
+      total += products[i].price * quantities[i];
     }
 
-    return total;
+    return total.toFixed(2);
   }, [quantities]);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const Cart = () => {
 
                 await getDoc(docRef)
                   .then((response) => {
-                    products.push(response);
+                    products.push(response.data());
                   })
                   .catch((error) => {
                     console.log("Unable to fetch products:", error);
@@ -115,11 +115,15 @@ const Cart = () => {
       functions,
       "createStripeCheckout"
     );
+
     const stripe = await loadStripe(
       "pk_test_51Moq2zFStkwWp0dx3CRWnXeHrt1e7MQHV3i1OEpr7gQNWJbrq1TcMZDfP2WN4qRRrbeN2VsSFhTMWoLFrCsrKHkj00PNyon7cb"
     );
 
-    createStripeCheckout().then((response) => {
+    await createStripeCheckout({
+      products: products,
+      quantities: quantities,
+    }).then((response) => {
       const sessionId = response.data.id;
       stripe.redirectToCheckout({ sessionId: sessionId });
     });
@@ -138,21 +142,21 @@ const Cart = () => {
             <hr />
             {products.map((product, index) => {
               return (
-                <div className="flex justify-between my-6" key={product.id}>
+                <div className="flex justify-between my-6" key={index}>
                   <div className="flex space-x-2">
                     <img
-                      src={product.data().image}
+                      src={product.image}
                       alt="shirt"
                       className="w-[140px]"
                     />
                     <div>
                       <Typography className="font-medium">
-                        {product.data().name}
+                        {product.name}
                       </Typography>
                       <Typography className="capitalize">
-                        {product.data().condition}
+                        {product.condition}
                       </Typography>
-                      {product.data().quantity === 0 ? (
+                      {product.quantity === 0 ? (
                         <Typography color="red">Out of Stock</Typography>
                       ) : (
                         <Typography color="green">In Stock</Typography>
@@ -180,7 +184,7 @@ const Cart = () => {
                     </div>
                   </div>
                   <Typography className="font-medium">
-                    ${product.data().price}
+                    ${product.price.toFixed(2)}
                   </Typography>
                 </div>
               );

@@ -20,6 +20,8 @@ import Signup from "./pages/Signup";
 import Cart from "./pages/Cart";
 import Contact from "./pages/Contact";
 import { loadStripe } from "@stripe/stripe-js";
+import Success from "./pages/Success";
+import Cancel from "./pages/Cancel";
 
 const Layout = () => {
   return (
@@ -98,6 +100,8 @@ const App = () => {
           </Route>
           <Route path="cart" element={<Cart />} />
         </Route>
+        <Route path="success" element={<Success />} />
+        <Route path="cancel" element={<Cancel />} />
       </Routes>
     </BrowserRouter>
   );
