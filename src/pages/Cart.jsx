@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useMemo } from "react";
-import { Button, Typography } from "@material-tailwind/react";
+import { Button, Option, Select, Typography } from "@material-tailwind/react";
 import {
   collection,
   deleteDoc,
@@ -7,6 +7,7 @@ import {
   getDoc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { AuthContext } from "../context/AuthContext";
@@ -39,13 +40,13 @@ const Cart = () => {
   }, [quantities]);
 
   useEffect(() => {
-    // fetches the user's cart
     const fetchCart = async () => {
       const cartQuery = query(
         collection(db, "cart"),
         where("userId", "==", currentUser.uid)
       );
 
+      // fetches the user's cart
       await getDocs(cartQuery)
         .then(async (response) => {
           const cartId = response.docs[0].id;
@@ -58,12 +59,12 @@ const Cart = () => {
           // fetches the cart items
           await getDocs(cartItemsQuery)
             .then(async (response) => {
-              const items = response.docs;
+              const cartItems = response.docs;
               let products = [];
               let qty = [];
 
               // fetches the products linked to each cart item
-              for (const item of items) {
+              for (const item of cartItems) {
                 qty.push(item.data().quantity);
 
                 const docRef = doc(db, "products", item.data().productId);
@@ -77,7 +78,7 @@ const Cart = () => {
                   });
               }
 
-              setCartItems(items);
+              setCartItems(cartItems);
               setProducts(products);
               setQuantities(qty);
             })
@@ -110,6 +111,24 @@ const Cart = () => {
       });
   };
 
+  // changes quantity of item in cart
+  const handleQuantityChange = async (e, index) => {
+    const newQuantity = e.target.value;
+
+    let newQuantities = quantities.slice();
+    newQuantities[index] = newQuantity;
+
+    setQuantities(newQuantities);
+
+    const docRef = doc(db, "cartItems", cartItems[index].id);
+
+    // updates quantity in cart item document
+    await updateDoc(docRef, {
+      quantity: newQuantity,
+    });
+  };
+
+  // redirects user to the Stripe checkout page
   const checkout = async () => {
     const createStripeCheckout = httpsCallable(
       functions,
@@ -128,8 +147,6 @@ const Cart = () => {
       stripe.redirectToCheckout({ sessionId: sessionId });
     });
   };
-
-  console.log(subTotal);
 
   return (
     <>
@@ -167,12 +184,17 @@ const Cart = () => {
                           label="Qty"
                           className="w-[4em] h-[2em] border border-gray-400 rounded-lg"
                           defaultValue={quantities[index]}
+                          onChange={(e) => handleQuantityChange(e, index)}
                         >
-                          <option className="">1</option>
+                          <option>1</option>
                           <option>2</option>
                           <option>3</option>
                           <option>4</option>
                           <option>5</option>
+                          <option>6</option>
+                          <option>7</option>
+                          <option>8</option>
+                          <option>9</option>
                         </select>
                         <Typography
                           className="text-red-500 font-medium mt-2 cursor-pointer hover:font-semibold my-auto"
@@ -184,7 +206,7 @@ const Cart = () => {
                     </div>
                   </div>
                   <Typography className="font-medium">
-                    ${product.price.toFixed(2)}
+                    ${(product.price * quantities[index]).toFixed(2)}
                   </Typography>
                 </div>
               );
