@@ -9,7 +9,6 @@ import Spinner from "../Spinner";
 
 const Item = ({ item, productId }) => {
   const [cartId, setCartId] = useState("");
-  const [inCart, setInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [open, setOpen] = useState(false);
 
@@ -26,27 +25,6 @@ const Item = ({ item, productId }) => {
       await getDocs(cartQuery)
         .then(async (response) => {
           setCartId(response.docs[0].id);
-
-          const cartItemsQuery = query(
-            collection(db, "cartItems"),
-            where("cartId", "==", cartId)
-          );
-
-          await getDocs(cartItemsQuery)
-            .then((response) => {
-              const cartItems = response.docs;
-
-              for (const item of cartItems) {
-                if (productId === item.data().productId) {
-                  setInCart(true);
-                  return;
-                }
-                setInCart(false);
-              }
-            })
-            .catch((error) => {
-              console.log("Unable to fetch cart items:", error);
-            });
         })
         .catch((error) => {
           console.log("Unable to fetch cart:", error);
@@ -72,26 +50,38 @@ const Item = ({ item, productId }) => {
     }
   };
 
-  const handleAddToCart = async () => {
-    if (inCart) {
-      toast.error("Item already in your cart");
-      return;
-    }
-
+  // attempts to add item to user's cart
+  const addToCart = async () => {
     setOpen(true);
 
-    await addDoc(collection(db, "cartItems"), {
-      cartId,
-      productId,
-      quantity,
-    })
-      .then((response) => {
-        console.log("Item added to cart!", response);
-        toast.success("Item added to your cart");
-        setInCart(true);
+    const cartItemsQuery = query(
+      collection(db, "cartItems"),
+      where("productId", "==", productId)
+    );
+
+    await getDocs(cartItemsQuery)
+      .then(async (response) => {
+        if (response.docs.length > 0) {
+          toast.error("Item already in your cart");
+          setOpen(false);
+          return;
+        }
+
+        await addDoc(collection(db, "cartItems"), {
+          cartId,
+          productId,
+          quantity,
+        })
+          .then((response) => {
+            console.log("Item added to cart!", response);
+            toast.success("Item added to your cart");
+          })
+          .catch((error) => {
+            console.log("Unable to add item to cart:", error);
+          });
       })
       .catch((error) => {
-        console.log("Unable to add item to cart:", error);
+        console.log("Unable to fetch cart items:", error);
       });
 
     setOpen(false);
@@ -153,7 +143,7 @@ const Item = ({ item, productId }) => {
         <Button
           fullWidth
           className="bg-yellow-400 rounded-lg border font-semibold hover:bg-red-600 hover:text-white text-black mb-4 capitalize text-sm transition-colors"
-          onClick={handleAddToCart}
+          onClick={addToCart}
         >
           Add to Cart
         </Button>

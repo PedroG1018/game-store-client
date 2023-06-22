@@ -167,7 +167,11 @@ const Cart = () => {
                       className="w-[140px]"
                     />
                     <div>
-                      <Typography className="font-medium">
+                      <Typography
+                        className="font-medium hover:underline"
+                        as="a"
+                        href={`/products/${cartItems[index].data().productId}`}
+                      >
                         {product.name}
                       </Typography>
                       <Typography className="capitalize">
@@ -176,7 +180,9 @@ const Cart = () => {
                       {product.quantity === 0 ? (
                         <Typography color="red">Out of Stock</Typography>
                       ) : (
-                        <Typography color="green">In Stock</Typography>
+                        <Typography color="green" className="font-semibold">
+                          In Stock
+                        </Typography>
                       )}
 
                       <div className="flex space-x-2 mt-4">
