@@ -1,5 +1,5 @@
 import { Button, Typography } from "@material-tailwind/react/";
-import { Rating } from "@mui/material";
+import { Rating } from "@material-tailwind/react";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { AuthContext } from "../../context/AuthContext";
@@ -87,62 +87,59 @@ const Item = ({ item, productId }) => {
     setOpen(false);
   };
 
+  if (!item.price) {
+    return;
+  }
+
   return (
     <div className="flex my-10 justify-center mx-auto space-x-8">
       <div className="p-2">
-        <img src={item.image} alt="product" className="h-[30em]" />
+        <img src={item.image} alt="product" className="" />
       </div>
-      <div className="flex flex-col min-w-[30em]">
-        <Typography
-          variant="h5"
-          className="font-semibold text-blue-900 capitalize"
-        >
+      <div className="flex flex-col max-w-[30em]">
+        <Typography variant="h3" className="font-semibold capitalize">
           {item.name}
         </Typography>
-        <Typography variant="h6" className=" text-red-500">
-          ${item.price}
+        <Typography variant="h5" className="font-medium">
+          ${item.price.toFixed(2)}
         </Typography>
-        <Typography variant="h6" className="capitalize">
-          <strong>Condition: </strong>
-          {item.condition}
-        </Typography>
-        <div className="flex space-x-2 mt-1 pl-0">
-          <Rating name="rating" value={1} disabled />
+        <div className="flex space-x-2 mt-1">
+          <Rating value={Math.floor(item.rating)} readonly />
           <Typography
             as="a"
             href="#reviews"
             variant="h6"
-            className="text-gray-800 hover:text-black"
+            className="text-gray-800 hover:text-black font-medium"
           >
-            1.0 Rated
+            {item.rating}
           </Typography>
         </div>
 
-        <div className="flex my-10 items-center">
-          <Typography variant="h6">Quantity:</Typography>
+        <div className="mt-2">
+          <Typography variant="h6" className="font-medium text-gray-600">
+            <strong>Description: </strong>
+            {item.desc}
+          </Typography>
+        </div>
 
-          <button
-            className="mx-4 bg-blue-900 rounded-lg h-8 px-4"
-            onClick={(e) => handleQuantity("-")}
-          >
-            <Typography variant="h5" className="text-white">
-              -
-            </Typography>
-          </button>
-          <Typography className="space-x-1">{quantity}</Typography>
-          <button
-            className="ml-4 bg-blue-900 rounded-lg h-8 px-4"
-            onClick={(e) => handleQuantity("+")}
-          >
-            <Typography variant="h5" className="text-white">
-              +
-            </Typography>
-          </button>
+        <div className="mt-2">
+          <Typography variant="h6" className="font-medium text-gray-600">
+            <strong>Platform: </strong>
+            {item.platform}
+          </Typography>
+          <Typography variant="h6" className="font-medium text-gray-600">
+            <strong>Region: </strong>
+            {item.region}
+          </Typography>
+          <Typography variant="h6" className="font-medium text-gray-600">
+            <strong>Release Date: </strong>
+            {item.releaseDate}
+          </Typography>
         </div>
 
         <Button
           fullWidth
-          className="bg-yellow-400 rounded-lg border font-semibold hover:bg-red-600 hover:text-white text-black mb-4 capitalize text-sm transition-colors"
+          className="bg-yellow-400 hover:bg-yellow-600 rounded-lg shadow-none border font-semibold text-black mt-4 capitalize text-sm"
           onClick={addToCart}
         >
           Add to Cart

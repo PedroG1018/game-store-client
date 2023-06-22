@@ -14,7 +14,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
-import { Rating } from "@mui/material";
+import { Rating } from "@material-tailwind/react";
 
 const ReviewForm = ({ open, handleOpen, product }) => {
   const [value, setValue] = useState(1);
@@ -61,9 +61,8 @@ const ReviewForm = ({ open, handleOpen, product }) => {
           <CardBody className="flex flex-col gap-4">
             <div className="justify-center flex">
               <Rating
-                name="rating"
                 value={value}
-                onChange={(e, newValue) => {
+                onChange={(newValue) => {
                   setValue(newValue);
                 }}
               />

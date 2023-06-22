@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -21,10 +21,14 @@ const Login = () => {
     e.preventDefault();
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         // Signed in
         const user = userCredential.user;
-        dispatch({ type: "LOGIN", payload: user });
+
+        dispatch({
+          type: "LOGIN",
+          payload: user,
+        });
         toast.success("Signed in.");
         navigate("/");
       })

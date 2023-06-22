@@ -18,7 +18,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
-import Spinner from "../Spinner";
 
 const Reviews = ({ product }) => {
   const [open, setOpen] = useState(false);
@@ -110,8 +109,6 @@ const Reviews = ({ product }) => {
     toast.error("You must be logged in to write a review");
   };
 
-  console.log(reviews);
-
   return (
     <div id="reviews">
       <div className="flex flex-row justify-between items-center mt-6">
@@ -123,7 +120,6 @@ const Reviews = ({ product }) => {
         </Button>
       </div>
       {reviews.map((review) => {
-        console.log("review:");
         return <Review key={review.id} review={review.data()} />;
       })}
 

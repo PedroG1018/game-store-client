@@ -19,7 +19,6 @@ import Product from "./pages/Product";
 import Signup from "./pages/Signup";
 import Cart from "./pages/Cart";
 import Contact from "./pages/Contact";
-import { loadStripe } from "@stripe/stripe-js";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
 

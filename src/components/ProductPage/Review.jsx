@@ -8,8 +8,7 @@ import {
 } from "@material-tailwind/react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-import { Rating } from "@mui/material";
-import Spinner from "../Spinner";
+import { Rating } from "@material-tailwind/react";
 
 const Review = ({ review }) => {
   const [user, setUser] = useState({ firstName: "", lastName: "" });
@@ -54,7 +53,7 @@ const Review = ({ review }) => {
               {user.firstName + " " + user.lastName}
             </Typography>
             <div className="flex items-center gap-0 ml-6">
-              <Rating name="rating" value={review.value} disabled />
+              <Rating value={review.value} readonly />
             </div>
           </div>
           <Typography color="blue-gray">{review.date}</Typography>
