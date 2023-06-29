@@ -21,6 +21,8 @@ import Cart from "./pages/Cart";
 import Contact from "./pages/Contact";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
+import Products from "./pages/Products";
+import Error from "./pages/Error";
 
 const Layout = () => {
   return (
@@ -86,21 +88,15 @@ const App = () => {
               </RequireAuth>
             }
           />
-          <Route
-            path="new"
-            element={
-              <RequireAuth>
-                <New />
-              </RequireAuth>
-            }
-          />
-          <Route path="products/">
+          <Route path="products" element={<Products />} />
+          <Route path="product/">
             <Route path=":productId" element={<Product />} />
           </Route>
           <Route path="cart" element={<Cart />} />
         </Route>
         <Route path="success" element={<Success />} />
         <Route path="cancel" element={<Cancel />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );

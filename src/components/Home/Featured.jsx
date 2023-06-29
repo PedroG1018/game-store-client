@@ -1,24 +1,22 @@
-import { Carousel } from "@material-tailwind/react";
 import {
   collection,
   doc,
   getDoc,
   getDocs,
+  limit,
   query,
-  where,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { db } from "../../firebase";
+import ProductCard from "../ProductCard";
 
-const ImageCarousel = ({ type }) => {
+const Featured = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
-
-  const navigate = useNavigate();
 
   const featuredProductsQuery = query(
     collection(db, "featuredProducts"),
-    where("type", "==", type)
+    limit(4)
   );
 
   // fetches the featured products to be displayed
@@ -48,27 +46,15 @@ const ImageCarousel = ({ type }) => {
     };
 
     fetchFeaturedProducts();
-  }, [type]);
+  }, []);
 
   return (
-    <div className="justify-center flex">
-      <Carousel className="rounded-xl">
-        {featuredProducts.map((featuredProduct) => (
-          <div
-            key={featuredProduct.id}
-            className="justify-center items-center flex pt-10 pb-14 bg-gradient-to-r from-indigo-400 to-blue-900"
-          >
-            <img
-              src={featuredProduct.data().image}
-              alt={featuredProduct.data().name}
-              className="h-[30em] object-cover drop-shadow-xl hover:opacity-90 cursor-pointer"
-              onClick={() => navigate(`/products/${featuredProduct.id}`)}
-            />
-          </div>
-        ))}
-      </Carousel>
+    <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 justify-items-center gap-3">
+      {featuredProducts.map((product, index) => (
+        <ProductCard key={index} product={product} />
+      ))}
     </div>
   );
 };
 
-export default ImageCarousel;
+export default Featured;
