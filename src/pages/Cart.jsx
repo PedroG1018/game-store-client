@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useMemo } from "react";
-import { Button, Option, Select, Typography } from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react";
 import {
   collection,
   deleteDoc,
@@ -102,8 +102,8 @@ const Cart = () => {
   const handleRemove = async (id) => {
     const docRef = doc(db, "cartItems", id);
     await deleteDoc(docRef)
-      .then((response) => {
-        console.log("Item removed from cart:", response);
+      .then(() => {
+        console.log("Item removed from cart!");
         navigate(0);
       })
       .catch((error) => {
