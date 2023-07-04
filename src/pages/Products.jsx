@@ -1,29 +1,56 @@
 import { collection, getDocs, query, where, or, and } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
+import algoliasearch from "algoliasearch/lite";
+import {
+  ClearRefinements,
+  Configure,
+  Highlight,
+  Hits,
+  InstantSearch,
+  Pagination,
+  RefinementList,
+  SearchBox,
+} from "react-instantsearch-hooks-web";
 
-const Products = ({ platform, type }) => {
-  const [products, setProducts] = useState([]);
+const Hit = (props) => {
+  return (
+    <div>
+      <img src={props.hit.image} align="left" alt={props.hit.name} />
+      <div className="hit-name">
+        <Highlight attribute="name" hit={props.hit} />
+      </div>
+      <div className="hit-description">
+        <Highlight attribute="description" hit={props.hit} />
+      </div>
+      <div className="hit-price">${props.hit.price}</div>
+    </div>
+  );
+};
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const productsRef = collection(db, "products");
-
-      console.log(platform);
-
-      let productQuery = query(
-        productsRef,
-        and(where("platform", "==", platform))
-      );
-
-      await getDocs(productQuery).then((response) => {
-        console.log(response);
-      });
-    };
-
-    fetchProducts();
-  });
-  return <div></div>;
+const Products = () => {
+  const searchClient = algoliasearch(
+    process.env.REACT_APP_ALGOLIA_APP_ID,
+    process.env.REACT_APP_ALGOLIA_KEY
+  );
+  return (
+    <div className="ais-InstantSearch">
+      <h1>React InstantSearch e-commerce demo</h1>
+      <InstantSearch indexName="products" searchClient={searchClient}>
+        <div className="left-panel">
+          <ClearRefinements />
+          <h2>Brands</h2>
+          <RefinementList attribute="platform" />
+          <Configure hitsPerPage={3} />
+        </div>
+        <div className="right-panel">
+          <SearchBox />
+          <Hits />
+          <Pagination />
+        </div>
+      </InstantSearch>
+    </div>
+  );
 };
 
 export default Products;

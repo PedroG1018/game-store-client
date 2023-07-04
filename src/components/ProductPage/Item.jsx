@@ -92,11 +92,15 @@ const Item = ({ item, productId }) => {
   }
 
   return (
-    <div className="flex my-10 justify-center mx-auto space-x-8">
-      <div className="p-2">
-        <img src={item.image} alt="product" className="" />
+    <div className="lg:flex my-10 justify-center space-x-8">
+      <div className="flex justify-center lg:mr-4 mb-4">
+        <img
+          src={item.image}
+          alt="product"
+          className="lg:max-w-[20em] max-w-[28em] object-contain object-top"
+        />
       </div>
-      <div className="flex flex-col max-w-[30em]">
+      <div className="flex-col" style={{ marginLeft: 0 + "px" }}>
         <Typography variant="h3" className="font-semibold capitalize">
           {item.name}
         </Typography>
@@ -104,7 +108,11 @@ const Item = ({ item, productId }) => {
           ${item.price.toFixed(2)}
         </Typography>
         <div className="flex space-x-2 mt-1">
-          <Rating value={Math.floor(item.rating)} readonly />
+          <Rating
+            value={Math.floor(item.rating)}
+            readonly
+            className="cursor-none"
+          />
           <Typography
             as="a"
             href="#reviews"
@@ -116,22 +124,22 @@ const Item = ({ item, productId }) => {
         </div>
 
         <div className="mt-2">
-          <Typography variant="h6" className="font-medium text-gray-600">
+          <Typography variant="h6" className="font-medium text-black">
             <strong>Description: </strong>
             {item.desc}
           </Typography>
         </div>
 
         <div className="mt-2">
-          <Typography variant="h6" className="font-medium text-gray-600">
+          <Typography variant="h6" className="font-medium text-black">
             <strong>Platform: </strong>
             {item.platform}
           </Typography>
-          <Typography variant="h6" className="font-medium text-gray-600">
+          <Typography variant="h6" className="font-medium text-black">
             <strong>Region: </strong>
             {item.region}
           </Typography>
-          <Typography variant="h6" className="font-medium text-gray-600">
+          <Typography variant="h6" className="font-medium text-black">
             <strong>Release Date: </strong>
             {item.releaseDate}
           </Typography>

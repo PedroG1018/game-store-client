@@ -1,8 +1,6 @@
 import {
-  Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Typography,
 } from "@material-tailwind/react";
@@ -14,7 +12,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <Card
-      className="w-80 cursor-pointer hover:opacity-90 bg-gray-200"
+      className="w-full h-96 cursor-pointer hover:opacity-90 bg-gray-200 rounded-none"
       onClick={() => navigate(`/product/${product.id}`)}
     >
       <CardHeader

@@ -135,9 +135,7 @@ const Cart = () => {
       "createStripeCheckout"
     );
 
-    const stripe = await loadStripe(
-      "pk_test_51Moq2zFStkwWp0dx3CRWnXeHrt1e7MQHV3i1OEpr7gQNWJbrq1TcMZDfP2WN4qRRrbeN2VsSFhTMWoLFrCsrKHkj00PNyon7cb"
-    );
+    const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
     await createStripeCheckout({
       products: products,
@@ -170,7 +168,7 @@ const Cart = () => {
                       <Typography
                         className="font-medium hover:underline"
                         as="a"
-                        href={`/products/${cartItems[index].data().productId}`}
+                        href={`/product/${cartItems[index].data().productId}`}
                       >
                         {product.name}
                       </Typography>
