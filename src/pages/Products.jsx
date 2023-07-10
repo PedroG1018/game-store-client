@@ -1,6 +1,4 @@
-import { collection, getDocs, query, where, or, and } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { db } from "../firebase";
 import algoliasearch from "algoliasearch/lite";
 import {
   ClearRefinements,

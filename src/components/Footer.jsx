@@ -4,7 +4,7 @@ import icon from "../../src/img/1up.png";
 
 const Footer = () => {
   return (
-    <footer className=" bg-white p-8 mx-auto flex flex-col items-center w-full">
+    <footer className=" bg-blue-900 p-8 mx-auto flex flex-col items-center w-full mt-10">
       <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 bg:white text-center md:justify-between">
         <a href="/">
           <img src={icon} alt="logo-ct" className="w-10" />
@@ -13,8 +13,8 @@ const Footer = () => {
           <li>
             <Typography
               as="a"
-              href="#"
-              color="blue-gray"
+              href="/about"
+              color="white"
               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
             >
               About Us
@@ -24,7 +24,7 @@ const Footer = () => {
             <Typography
               as="a"
               href="/cart"
-              color="blue-gray"
+              color="white"
               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
             >
               Shopping Cart
@@ -33,8 +33,8 @@ const Footer = () => {
           <li>
             <Typography
               as="a"
-              href="#"
-              color="blue-gray"
+              href="/account"
+              color="white"
               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
             >
               Orders
@@ -43,8 +43,8 @@ const Footer = () => {
           <li>
             <Typography
               as="a"
-              href="#"
-              color="blue-gray"
+              href="/contact"
+              color="white"
               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
             >
               Contact Us
@@ -52,7 +52,7 @@ const Footer = () => {
           </li>
         </ul>
       </div>
-      <Typography color="blue-gray" className="text-center font-medium">
+      <Typography color="white" className="text-center font-medium">
         &copy; 2023 1-Up Store
       </Typography>
     </footer>

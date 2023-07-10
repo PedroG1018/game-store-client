@@ -26,7 +26,7 @@ const NavList = () => {
           as="a"
           href={href}
           variant="small"
-          color="blue-gray"
+          color="white"
           className="font-normal"
         >
           <MenuItem className="flex items-center gap-2 lg:rounded-full">

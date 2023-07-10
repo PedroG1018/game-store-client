@@ -26,8 +26,12 @@ const Nav = () => {
   };
 
   return (
-    <Navbar className="w-full p-2 lg:pl-6 mx-auto" shadow={false}>
-      <div className="relative mx-auto flex items-center text-blue-gray-900">
+    <Navbar
+      className="bg-blue-900 max-w-full rounded-none border-b-2 border-white"
+      shadow={false}
+      color="bg-blue-900"
+    >
+      <div className="relative mx-auto flex items-center text-white">
         <a href="/">
           <div className="flex items-center">
             <Typography className="mr-2 ml-2 py-1.5 font-bold">1-Up</Typography>
@@ -42,7 +46,7 @@ const Nav = () => {
         </div>
         <IconButton
           size="sm"
-          color="blue-gray"
+          color="white"
           variant="text"
           onClick={toggleIsNavOpen}
           className="ml-auto mr-2 lg:hidden"

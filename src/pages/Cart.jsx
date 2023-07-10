@@ -130,6 +130,7 @@ const Cart = () => {
 
   // redirects user to the Stripe checkout page
   const checkout = async () => {
+    setOpen(true);
     const createStripeCheckout = httpsCallable(
       functions,
       "createStripeCheckout"
@@ -144,6 +145,7 @@ const Cart = () => {
       const sessionId = response.data.id;
       stripe.redirectToCheckout({ sessionId: sessionId });
     });
+    setOpen(false);
   };
 
   return (
