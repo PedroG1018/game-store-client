@@ -1,6 +1,5 @@
 import {
   ChevronDownIcon,
-  RocketLaunchIcon,
   Square3Stack3DIcon,
 } from "@heroicons/react/24/outline";
 import {
@@ -42,10 +41,10 @@ const PlatformsMenu = () => {
   const renderItems = navListMenuItems.map(({ title, description }) => (
     <a href={`/platforms/${title.toLowerCase()}`} key={title}>
       <MenuItem>
-        <Typography variant="h6" color="blue-gray" className="mb-1">
+        <Typography variant="h6" color="white" className="mb-1">
           {title}
         </Typography>
-        <Typography variant="small" color="blue-gray" className="font-normal">
+        <Typography variant="small" color="white" className="font-normal">
           {description}
         </Typography>
       </MenuItem>

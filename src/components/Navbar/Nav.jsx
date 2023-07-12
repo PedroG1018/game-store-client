@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   Typography,
   Navbar,
-  MobileNav,
   IconButton,
   Collapse,
 } from "@material-tailwind/react";

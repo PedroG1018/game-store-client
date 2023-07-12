@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Toast, Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
 import {
   BrowserRouter,
@@ -9,12 +9,10 @@ import {
   Navigate,
 } from "react-router-dom";
 import Nav from "./components/Navbar/Nav";
-import Platform from "./pages/Platform";
 import Footer from "./components/Footer";
 import Account from "./pages/Account";
 import Login from "./pages/Login";
 import { AuthContext } from "./context/AuthContext";
-import New from "./pages/New";
 import Product from "./pages/Product";
 import Signup from "./pages/Signup";
 import Cart from "./pages/Cart";
@@ -71,15 +69,6 @@ const App = () => {
           />
           <Route path="contact" element={<Contact />} />
           <Route index element={<Home />} />
-          <Route path="platforms/">
-            {["nintendo", "playstation", "xbox", "sega"].map((platform) => (
-              <Route
-                key={platform}
-                path={platform}
-                element={<Platform children={platform} />}
-              />
-            ))}
-          </Route>
           <Route
             path="account"
             element={

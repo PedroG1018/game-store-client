@@ -10,7 +10,6 @@ import {
 import React, { useContext, useState } from "react";
 import {
   ChevronDownIcon,
-  Cog6ToothIcon,
   ShoppingCartIcon,
   PowerIcon,
   UserCircleIcon,

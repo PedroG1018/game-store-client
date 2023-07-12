@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Typography } from "@material-tailwind/react";
 import icon from "../../src/img/1up.png";
 

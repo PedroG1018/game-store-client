@@ -156,7 +156,6 @@ const Cart = () => {
 
         {products.length > 0 ? (
           <div className="md:w-[36em] w-[30em] justify-center mx-auto">
-            <hr />
             {products.map((product, index) => {
               return (
                 <div className="flex justify-between my-6" key={index}>
