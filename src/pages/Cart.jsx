@@ -41,6 +41,11 @@ const Cart = () => {
 
   useEffect(() => {
     const fetchCart = async () => {
+      if (currentUser === null) {
+        setOpen(false);
+        return;
+      }
+
       const cartQuery = query(
         collection(db, "cart"),
         where("userId", "==", currentUser.uid)

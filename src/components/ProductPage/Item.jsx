@@ -9,7 +9,6 @@ import Spinner from "../Spinner";
 
 const Item = ({ item, productId }) => {
   const [cartId, setCartId] = useState("");
-  const [quantity, setQuantity] = useState(1);
   const [open, setOpen] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
@@ -17,9 +16,13 @@ const Item = ({ item, productId }) => {
   // fetches the user's cart id
   useEffect(() => {
     const fetchCart = async () => {
+      if (currentUser === null) {
+        return;
+      }
+
       const cartQuery = query(
         collection(db, "cart"),
-        where("userId", "==", currentUser.uid)
+        where("userId", "==", currentUser?.uid)
       );
 
       await getDocs(cartQuery)
@@ -54,7 +57,7 @@ const Item = ({ item, productId }) => {
         await addDoc(collection(db, "cartItems"), {
           cartId,
           productId,
-          quantity,
+          quantity: 1,
         })
           .then((response) => {
             console.log("Item added to cart!", response);
@@ -133,6 +136,7 @@ const Item = ({ item, productId }) => {
           fullWidth
           className="bg-yellow-400 hover:bg-yellow-600 rounded-lg shadow-none border font-semibold text-black mt-4 capitalize text-sm"
           onClick={addToCart}
+          disabled={currentUser === null}
         >
           Add to Cart
         </Button>
