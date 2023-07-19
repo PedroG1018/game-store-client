@@ -5,7 +5,7 @@ import Featured from "../components/Home/Featured";
 
 const Home = () => {
   return (
-    <main className="px-10 w-full mx-auto">
+    <main className="px-10 mx-auto">
       <SearchInput />
       <Hero />
       <Featured />

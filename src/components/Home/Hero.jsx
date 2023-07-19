@@ -13,11 +13,11 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <Card className="flex-row w-full mb-8 rounded-none">
+    <Card className="lg:flex-row flex-col mb-8 rounded-none">
       <CardHeader
         shadow={false}
         floated={false}
-        className="w-2/5 shrink-0 m-0 rounded-none"
+        className="lg:w-2/5 shrink-0 m-0 rounded-none"
       >
         <img
           src="https://hips.hearstapps.com/hmg-prod/images/gridoffset-videogames-1-1585583517.jpg?crop=0.888888888888889xw:1xh;center,top"

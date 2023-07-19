@@ -10,6 +10,7 @@ import {
   RefinementList,
   SearchBox,
 } from "react-instantsearch-hooks-web";
+import SearchInput from "../components/SearchInput";
 
 const Hit = ({ hit }) => {
   return (
@@ -47,11 +48,18 @@ const Products = () => {
     <div className="">
       <h1>React InstantSearch e-commerce demo</h1>
       <InstantSearch indexName="products" searchClient={searchClient}>
-        <div className="right-panel">
+        <div className="flex justify-center">
           <SearchBox
             searchAsYouType={false}
             placeholder="Search for Products"
+            submitIconComponent={() => <div>Submit</div>}
+            classNames={{
+              input: <SearchInput />,
+            }}
+            className=""
           />
+        </div>
+        <div className="right-panel">
           <Hits hitComponent={Hit} />
           <Pagination />
         </div>
