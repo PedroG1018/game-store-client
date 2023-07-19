@@ -5,10 +5,12 @@ import ContactForm from "../components/Contact/ContactForm";
 
 const Contact = () => {
   return (
-    <div className="justify-center flex flex-col">
+    <>
       <Header title="Contact Us" />
-      <ContactForm />
-    </div>
+      <div className="justify-center flex flex-col">
+        <ContactForm />
+      </div>
+    </>
   );
 };
 

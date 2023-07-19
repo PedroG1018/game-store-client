@@ -9,7 +9,7 @@ import React from "react";
 
 const ContactForm = () => {
   return (
-    <div className="mt-4 w-96 mx-auto space-y-4">
+    <div className="mt-4 w-full px-10 mx-auto space-y-4">
       <Input size="lg" label="Full Name" />
       <Input size="lg" label="Email" />
       <Select label="What can we help you with?">

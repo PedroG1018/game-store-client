@@ -36,8 +36,6 @@ const Product = () => {
 
   return (
     <div className="max-w-screen-lg mx-auto px-10">
-      <SearchInput />
-
       <Spinner open={open} />
       <Item item={item} productId={product.id} />
       {product && <Reviews id="reviews" product={product} />}

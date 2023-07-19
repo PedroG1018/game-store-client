@@ -48,11 +48,11 @@ const Review = ({ review }) => {
           alt="candice wu"
         />
         <div className="flex flex-col">
-          <div className="flex items-center justify-between">
+          <div className="lg:flex items-center justify-between">
             <Typography variant="h6" color="blue-gray">
               {user.firstName + " " + user.lastName}
             </Typography>
-            <div className="flex items-center gap-0 ml-6">
+            <div className="flex items-center gap-0 lg:ml-6">
               <Rating value={review.value} readonly />
             </div>
           </div>

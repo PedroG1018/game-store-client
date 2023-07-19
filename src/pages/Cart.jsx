@@ -151,11 +151,11 @@ const Cart = () => {
   return (
     <>
       <Header title="My Cart" />
-      <div className="flex flex-col mx-auto max-w-screen-lg w-full justify-center my-10">
+      <div className="flex-col mx-auto max-w-screen-lg justify-center my-10 px-4">
         <Spinner open={open} />
 
         {products.length > 0 ? (
-          <div className="md:w-[36em] w-[30em] justify-center mx-auto">
+          <div className="md:w-[36em] w-full justify-center mx-auto">
             {products.map((product, index) => {
               return (
                 <div className="flex justify-between my-6" key={index}>
@@ -226,7 +226,7 @@ const Cart = () => {
             Add items to your cart
           </Typography>
         )}
-        <div className="md:w-[36em] w-[30em] justify-center items-center mx-auto mt-6">
+        <div className="md:w-[36em] w-full justify-center items-center mx-auto mt-6">
           <div className="flex justify-between mb-6">
             <Typography className="font-semibold">Subtotal</Typography>
             <Typography className="font-semibold">${subTotal}</Typography>

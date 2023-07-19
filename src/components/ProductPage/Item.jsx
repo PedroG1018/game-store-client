@@ -34,22 +34,6 @@ const Item = ({ item, productId }) => {
     fetchCart();
   }, [cartId]);
 
-  // handles
-  const handleQuantity = (type) => {
-    if (type === "+") {
-      if (quantity === 9) {
-        toast.error(`Limit ${quantity} per customer`);
-        return;
-      }
-      setQuantity(quantity + 1);
-    } else if (type === "-") {
-      if (quantity === 1) {
-        return;
-      }
-      setQuantity(quantity - 1);
-    }
-  };
-
   // attempts to add item to user's cart
   const addToCart = async () => {
     setOpen(true);
@@ -92,12 +76,12 @@ const Item = ({ item, productId }) => {
   }
 
   return (
-    <div className="lg:flex my-10 justify-center space-x-8">
+    <div className=" my-10 justify-center">
       <div className="flex justify-center lg:mr-4 mb-4">
         <img
           src={item.image}
           alt="product"
-          className="lg:max-w-[20em] max-w-[28em] object-contain object-top"
+          className="lg:max-w-[34em] md:max-w-[26em] max-w-[20em] object-contain object-top"
         />
       </div>
       <div className="flex-col" style={{ marginLeft: 0 + "px" }}>
