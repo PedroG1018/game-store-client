@@ -34,7 +34,7 @@ const Review = ({ review }) => {
   }, [review]);
 
   return (
-    <Card color="transparent" shadow={false} className="w-[48em] mt-4">
+    <Card color="transparent" shadow={false} className="w-full mt-4">
       <CardHeader
         color="transparent"
         floated={false}
