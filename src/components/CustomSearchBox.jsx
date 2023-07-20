@@ -1,12 +1,10 @@
-import React, { useCallback, useState } from "react";
-import { useSearchBox } from "react-instantsearch-hooks-web";
+import React, { useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Input } from "@material-tailwind/react";
-import { TextField } from "@mui/material";
 import { connectSearchBox } from "react-instantsearch-core";
 import { useNavigate } from "react-router";
 
-const SearchBox = ({ currentRefinement, refine }) => {
+const SearchBox = () => {
   const [search, setSearch] = useState("");
 
   const navigate = useNavigate();

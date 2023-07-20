@@ -1,12 +1,11 @@
-import SearchInput from "../components/SearchInput";
-import { Typography } from "@material-tailwind/react";
 import Hero from "../components/Home/Hero";
 import Featured from "../components/Home/Featured";
+import CustomSearchBox from "../components/CustomSearchBox";
 
 const Home = () => {
   return (
     <main className="px-10 mx-auto">
-      <SearchInput />
+      <CustomSearchBox />
       <Hero />
       <Featured />
     </main>

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Item from "../components/ProductPage/Item";
-import Details from "../components/ProductPage/Details";
 import Reviews from "../components/ProductPage/Reviews";
-import SearchInput from "../components/SearchInput";
 import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
