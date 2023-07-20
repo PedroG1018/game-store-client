@@ -21,9 +21,6 @@ const SearchInput = () => {
   };
   return (
     <div className="mb-10 max-w-xl mx-auto">
-      <InstantSearch searchClient={searchClient} indexName="products">
-        <RefinementList attribute="name" />
-      </InstantSearch>
       <Input
         placeholder="Search for products"
         variant="static"

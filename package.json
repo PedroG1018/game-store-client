@@ -29,7 +29,7 @@
     "react-google-autocomplete": "^2.7.3",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.8.0",
-    "react-instantsearch-dom": "^6.40.1",
+    "react-instantsearch-dom": "^6.40.3",
     "react-instantsearch-hooks-web": "^6.45.0",
     "react-phone-input-2": "^2.15.1",
     "react-phone-input-material-ui": "^2.18.1",

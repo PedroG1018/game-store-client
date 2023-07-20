@@ -37,16 +37,14 @@ const Hero = () => {
           video games, consoles, and accessories. Buy used or refurbished; our
           products are 100% authentic and guaranteed to work at a great price!
         </Typography>
-        <a href="#" className="inline-block">
-          <Button
-            variant="text"
-            className="flex items-center gap-2 text-blue-900 text-lg"
-            onClick={() => navigate("/products")}
-          >
-            Start Shopping
-            <ArrowLongRightIcon strokeWidth={2} className="w-4 h-4" />
-          </Button>
-        </a>
+        <Button
+          variant="text"
+          className="flex items-center gap-2 text-blue-900 text-lg"
+          onClick={() => navigate("/products")}
+        >
+          Start Shopping
+          <ArrowLongRightIcon strokeWidth={2} className="w-4 h-4" />
+        </Button>
       </CardBody>
     </Card>
   );
