@@ -6,10 +6,10 @@ const Products = () => {
   const query = new URLSearchParams(window.location.search).get("query");
 
   return (
-    <div className="">
+    <>
       <CustomSearchBox defaultRefinement={query} />
       <CustomHits />
-    </div>
+    </>
   );
 };
 
