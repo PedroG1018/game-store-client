@@ -168,7 +168,7 @@ const Cart = () => {
                     <img
                       src={product.image}
                       alt="shirt"
-                      className="w-[140px]"
+                      className="w-[140px] object-contain object-top"
                     />
                     <div>
                       <Typography

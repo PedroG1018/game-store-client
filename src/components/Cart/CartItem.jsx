@@ -5,7 +5,11 @@ const CartItem = ({ product, qty, handleQuantityChange, handleRemove }) => {
   return (
     <div className="flex justify-between my-6">
       <div className="flex space-x-2">
-        <img src={product.data().image} alt="shirt" className="w-[140px]" />
+        <img
+          src={product.data().image}
+          alt={product.data().name}
+          className="object-contain"
+        />
         <div>
           <Typography
             className="font-medium hover:underline"

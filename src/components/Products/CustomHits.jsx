@@ -16,9 +16,9 @@ const Hits = ({ hits }) => {
           <a
             key={hit.objectID}
             href={"product/" + hit.objectID}
-            className="group bg-gray-100 hover:drop-shadow-lg"
+            className="group bg-gray-100 hover:drop-shadow-lg flex sm:flex-col"
           >
-            <div className="aspect-h-1 aspect-w-1 w-full xl:aspect-h-8 xl:aspect-w-7 ">
+            <div className="aspect-h-1 aspect-w-1 w-full xl:aspect-h-8 xl:aspect-w-7">
               <img
                 src={hit.image}
                 alt={hit.name}

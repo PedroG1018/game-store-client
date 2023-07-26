@@ -17,7 +17,7 @@ const SearchBox = () => {
   };
 
   return (
-    <div className="mb-10 max-w-xl mx-auto">
+    <div className="mb-6 max-w-xl mx-auto">
       <Input
         placeholder="Search for products"
         variant="static"
