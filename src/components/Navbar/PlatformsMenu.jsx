@@ -39,7 +39,7 @@ const PlatformsMenu = () => {
   };
 
   const renderItems = navListMenuItems.map(({ title, description }) => (
-    <a href={`/platforms/${title.toLowerCase()}`} key={title}>
+    <a href={`/products?platform=${title.toLowerCase()}`} key={title}>
       <MenuItem>
         <Typography variant="h6" color="white" className="mb-1">
           {title}

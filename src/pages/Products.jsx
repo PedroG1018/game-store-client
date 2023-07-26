@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CustomSearchBox from "../components/CustomSearchBox";
 import CustomHits from "../components/Products/CustomHits";
 import { Typography } from "@material-tailwind/react";
@@ -11,9 +11,13 @@ import {
 import CustomPagination from "../components/Products/CustomPagination";
 
 const Products = () => {
-  const query = new URLSearchParams(window.location.search).get("query");
+  const [query, setQuery] = useState(null);
+  const [platform, setPlatform] = useState(null);
 
-  console.log(query);
+  useEffect(() => {
+    setQuery(new URLSearchParams(window.location.search).get("query"));
+    setPlatform(new URLSearchParams(window.location.search).get("platform"));
+  }, []);
 
   return (
     <main className="px-10 max-w-[1200px] m-auto p-[1rem]">
@@ -33,7 +37,10 @@ const Products = () => {
             <RefinementList attribute="platform" />
           </Panel>
           <Panel header="company">
-            <RefinementList attribute="company" />
+            <RefinementList
+              attribute="company"
+              defaultRefinement={[platform] ? platform : []}
+            />
           </Panel>
         </div>
         <div className="flex-3">
